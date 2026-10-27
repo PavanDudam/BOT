@@ -29,7 +29,7 @@ export default function App() {
     {
       id: "welcome",
       role: "bot",
-      text: "Ask anything about Athlyte Search — definitions, dashboards, navigation, or how to frame queries. Answers come only from our platform docs.",
+      text: "Hi — ask me about Athlyte Search. Definitions, how to write a search, dashboards, navigation, exports… I’m here to help.",
       grounded: true,
     },
   ]);
@@ -88,7 +88,9 @@ export default function App() {
                     ...m,
                     streaming: false,
                     grounded,
-                    text: m.text || "I could not generate an answer from the docs.",
+                    text:
+                      m.text ||
+                      "Hmm, I didn’t get a clear answer there. Want to try asking another way?",
                   }
                 : m,
             ),
@@ -138,7 +140,7 @@ export default function App() {
         <p className="brand">Athlyte Search</p>
         <h1>Platform Help</h1>
         <p className="tagline">
-          Docs-only answers for definitions, query framing, dashboards, and more.
+          Quick help for stats, searches, dashboards, and getting around the product.
         </p>
       </header>
 
@@ -151,22 +153,11 @@ export default function App() {
             >
               <div className="meta">
                 <span>{msg.role === "user" ? "You" : "Athlyte Help"}</span>
-                {msg.intent ? <span className="intent">{msg.intent.replace("_", " ")}</span> : null}
               </div>
               <div className="body">
                 {msg.text || (msg.streaming ? "…" : "")}
                 {msg.streaming ? <span className="cursor" aria-hidden /> : null}
               </div>
-              {msg.citations && msg.citations.length > 0 ? (
-                <div className="citations">
-                  {msg.citations.map((c, i) => (
-                    <span key={`${c.source}-${i}`} className="chip" title={c.snippet}>
-                      {c.source.replace(/\.md$/, "")}
-                      {c.section ? ` · ${c.section.split(" > ").slice(-1)[0]}` : ""}
-                    </span>
-                  ))}
-                </div>
-              ) : null}
             </article>
           ))}
           <div ref={bottomRef} />

@@ -11,9 +11,10 @@ from google.genai import types
 from app.api.schemas import ChatResponse, Citation
 from app.config import get_settings
 from app.logging_utils import get_logger, timed
-from app.rag.intent import detect_intent, extract_stat_hint
+from app.rag.intent import QUERY_TYPE_LABELS, analyze_question
 from app.rag.prompts import REFUSAL_MESSAGE, SYSTEM_BASE, build_user_prompt
 from app.rag.retriever import RetrievedChunk, retrieve
+from app.rag.text_clean import clean_plain_text
 
 logger = get_logger("athlyte.chat")
 
@@ -74,12 +75,24 @@ def _usage_dict(response) -> dict[str, int | None]:
 def _prepare(question: str) -> tuple[str, str | None, list[RetrievedChunk], str, str]:
     """Intent + retrieve + prompt. Empty chunks means refuse path."""
     with timed(logger, "chat.intent"):
-        intent = detect_intent(question)
-        stat_hint = extract_stat_hint(question)
-    logger.info("chat.intent.done | intent=%s stat_hint=%s", intent, stat_hint or "-")
+        focus = analyze_question(question)
+        intent = focus.intent
+        stat_hint = focus.stat_hint
+        query_type = focus.query_type
+    logger.info(
+        "chat.intent.done | intent=%s stat_hint=%s query_type=%s",
+        intent,
+        stat_hint or "-",
+        query_type or "-",
+    )
 
     with timed(logger, "chat.retrieve", intent=intent):
-        chunks = retrieve(question, intent=intent, stat_hint=stat_hint)
+        chunks = retrieve(
+            question,
+            intent=intent,
+            stat_hint=stat_hint,
+            query_type=query_type,
+        )
 
     settings = get_settings()
     strong = [c for c in chunks if c.score >= settings.score_threshold]
@@ -89,15 +102,23 @@ def _prepare(question: str) -> tuple[str, str | None, list[RetrievedChunk], str,
         return intent, stat_hint, [], "", ""
 
     context = _format_context(useful)
-    prompt = build_user_prompt(intent, question, context, stat_hint=stat_hint)
+    prompt = build_user_prompt(
+        intent,
+        question,
+        context,
+        stat_hint=stat_hint,
+        query_type=query_type,
+        query_type_label=QUERY_TYPE_LABELS.get(query_type or "", query_type),
+    )
     logger.info(
-        "chat.prompt | model=%s temp=%s chunks=%s context_chars=%s prompt_chars=%s stat_hint=%s",
+        "chat.prompt | model=%s temp=%s chunks=%s context_chars=%s prompt_chars=%s stat_hint=%s query_type=%s",
         settings.gemini_model,
         settings.gemini_temperature,
         len(useful),
         len(context),
         len(prompt),
         stat_hint or "-",
+        query_type or "-",
     )
     return intent, stat_hint, useful, context, prompt
 
@@ -165,7 +186,7 @@ def answer_question(question: str) -> ChatResponse:
         gemini_timing.get("ms", 0.0),
     )
 
-    text = (response.text or "").strip()
+    text = clean_plain_text((response.text or "").strip())
     citations = _citations(useful)
     total_ms = (time.perf_counter() - t0) * 1000
     if not text:
@@ -244,8 +265,10 @@ def stream_answer(question: str) -> Iterator[str]:
             for chunk in stream:
                 piece = getattr(chunk, "text", None) or ""
                 if piece:
-                    answer_parts.append(piece)
-                    yield _sse({"type": "token", "text": piece})
+                    cleaned = clean_plain_text(piece)
+                    if cleaned:
+                        answer_parts.append(cleaned)
+                        yield _sse({"type": "token", "text": cleaned})
                 if getattr(chunk, "usage_metadata", None) is not None:
                     last_usage = chunk
 

@@ -39,6 +39,7 @@ def retrieve(
     *,
     intent: str = "general",
     stat_hint: str | None = None,
+    query_type: str | None = None,
     top_k: int | None = None,
 ) -> list[RetrievedChunk]:
     settings = get_settings()
@@ -62,7 +63,7 @@ def retrieve(
         if intent == "definition":
             hits = _boost_definition(hits, stat_hint)
         elif intent == "query_framing":
-            hits = _boost_framing(hits, question, stat_hint)
+            hits = _boost_framing(hits, question, stat_hint, query_type=query_type)
 
         filtered = [h for h in hits if h.score >= settings.score_threshold]
         if not filtered and hits:
@@ -72,12 +73,13 @@ def retrieve(
     top_scores = ",".join(f"{h.score:.3f}" for h in result[:5]) or "-"
     sources = ",".join(sorted({h.source_file for h in result})) or "-"
     logger.info(
-        "retrieve.done | returned=%s threshold=%.2f top_scores=[%s] sources=[%s] stat_hint=%s",
+        "retrieve.done | returned=%s threshold=%.2f top_scores=[%s] sources=[%s] stat_hint=%s query_type=%s",
         len(result),
         settings.score_threshold,
         top_scores,
         sources,
         stat_hint or "-",
+        query_type or "-",
     )
     return result
 
@@ -101,6 +103,8 @@ def _boost_framing(
     hits: list[RetrievedChunk],
     question: str,
     stat_hint: str | None,
+    *,
+    query_type: str | None = None,
 ) -> list[RetrievedChunk]:
     settings = get_settings()
     client = get_qdrant()
@@ -128,13 +132,29 @@ def _boost_framing(
         for p in query_type_hits
     ]
 
+    # For type-only questions (e.g. streak query), prefer how-to prose over random stat rows
+    type_keywords = {
+        "streaks": ("streak", "consecutive", "straight games"),
+        "last_time": ("last time", "ltw"),
+        "records": ("record", "highest", "lowest", "most", "minimum", "maximum"),
+        "basic": ("basic",),
+        "complex": ("complex", "and", "or"),
+        "count": ("count", "how many games"),
+        "rank": ("rank", "nth-most", "9th-most"),
+        "trend": ("trend", "on the rise"),
+    }
+    keywords = type_keywords.get(query_type or "", ())
+
     hint = (stat_hint or "").lower().strip()
     prefers_net = bool(hint) and "net" not in hint
+    type_only = bool(query_type) and not hint
 
     def key(h: RetrievedChunk) -> tuple:
         name_hit = 0
+        type_hit = 0
         name = (h.stat_name or "").lower()
         text_l = h.text.lower()
+        section_l = (h.section_title or "").lower()
         if hint:
             if hint in name or (name and name in hint):
                 name_hit = 3
@@ -142,8 +162,19 @@ def _boost_framing(
                 name_hit = 2
             if prefers_net and name_hit and name.startswith("net "):
                 name_hit += 1
-        kind_boost = 2 if h.chunk_kind in {"stat_row", "query_types"} else 0
-        return (name_hit + kind_boost, h.score)
+        if keywords:
+            if any(k in text_l or k in section_l for k in keywords):
+                type_hit = 4 if type_only else 2
+        if type_only:
+            # Prefer guide prose / query-type rows over unrelated stat tables
+            kind_boost = 3 if h.chunk_kind in {"prose", "query_types"} else 0
+            if h.source_file in {"Stat-Search-Guide.md", "Search-Functional-Documentation.md"}:
+                kind_boost += 2
+            if h.chunk_kind == "stat_row" and type_hit == 0:
+                kind_boost -= 2
+        else:
+            kind_boost = 2 if h.chunk_kind in {"stat_row", "query_types"} else 0
+        return (type_hit + name_hit + kind_boost, h.score)
 
     merged = {(h.source_file, h.section_title, h.text[:80]): h for h in extra + hits}
     return sorted(merged.values(), key=key, reverse=True)
