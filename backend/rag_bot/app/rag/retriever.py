@@ -5,8 +5,11 @@ from dataclasses import dataclass
 from qdrant_client.http import models as qm
 
 from app.config import get_settings
+from app.logging_utils import get_logger, timed
 from app.rag.embeddings import embed_query
 from app.rag.ingest import get_qdrant
+
+logger = get_logger("athlyte.retrieve")
 
 
 @dataclass
@@ -41,28 +44,42 @@ def retrieve(
     settings = get_settings()
     client = get_qdrant()
     k = top_k or settings.top_k
-    vector = embed_query(question)
 
-    # Over-fetch then re-rank / boost by intent
+    with timed(logger, "retrieve.embed_query", intent=intent):
+        vector = embed_query(question)
+
     fetch_k = max(k * 3, 20)
-    response = client.query_points(
-        collection_name=settings.qdrant_collection,
-        query=vector,
-        limit=fetch_k,
-        with_payload=True,
-    )
+    with timed(logger, "retrieve.qdrant_search", fetch_k=fetch_k, collection=settings.qdrant_collection):
+        response = client.query_points(
+            collection_name=settings.qdrant_collection,
+            query=vector,
+            limit=fetch_k,
+            with_payload=True,
+        )
     hits = [_to_chunk(p) for p in response.points]
 
-    if intent == "definition":
-        hits = _boost_definition(hits, stat_hint)
-    elif intent == "query_framing":
-        hits = _boost_framing(hits, question, stat_hint)
+    with timed(logger, "retrieve.rerank", intent=intent, candidates=len(hits)):
+        if intent == "definition":
+            hits = _boost_definition(hits, stat_hint)
+        elif intent == "query_framing":
+            hits = _boost_framing(hits, question, stat_hint)
 
-    filtered = [h for h in hits if h.score >= settings.score_threshold]
-    if not filtered and hits:
-        # Keep top few even if below threshold so generator can refuse gracefully
-        filtered = hits[: min(3, len(hits))]
-    return filtered[:k]
+        filtered = [h for h in hits if h.score >= settings.score_threshold]
+        if not filtered and hits:
+            filtered = hits[: min(3, len(hits))]
+        result = filtered[:k]
+
+    top_scores = ",".join(f"{h.score:.3f}" for h in result[:5]) or "-"
+    sources = ",".join(sorted({h.source_file for h in result})) or "-"
+    logger.info(
+        "retrieve.done | returned=%s threshold=%.2f top_scores=[%s] sources=[%s] stat_hint=%s",
+        len(result),
+        settings.score_threshold,
+        top_scores,
+        sources,
+        stat_hint or "-",
+    )
+    return result
 
 
 def _boost_definition(hits: list[RetrievedChunk], stat_hint: str | None) -> list[RetrievedChunk]:
@@ -88,16 +105,17 @@ def _boost_framing(
     settings = get_settings()
     client = get_qdrant()
 
-    # Always try to include query-type rows
-    query_type_hits = client.scroll(
-        collection_name=settings.qdrant_collection,
-        scroll_filter=qm.Filter(
-            must=[qm.FieldCondition(key="chunk_kind", match=qm.MatchValue(value="query_types"))]
-        ),
-        limit=20,
-        with_payload=True,
-        with_vectors=False,
-    )[0]
+    with timed(logger, "retrieve.scroll_query_types"):
+        query_type_hits = client.scroll(
+            collection_name=settings.qdrant_collection,
+            scroll_filter=qm.Filter(
+                must=[qm.FieldCondition(key="chunk_kind", match=qm.MatchValue(value="query_types"))]
+            ),
+            limit=20,
+            with_payload=True,
+            with_vectors=False,
+        )[0]
+
     extra = [
         RetrievedChunk(
             text=(p.payload or {}).get("text", ""),
@@ -110,9 +128,7 @@ def _boost_framing(
         for p in query_type_hits
     ]
 
-    # Prefer matching stat rows for examples
     hint = (stat_hint or "").lower().strip()
-    # Prefer canonical "Net X" when user asks for X yards-style shorthand
     prefers_net = bool(hint) and "net" not in hint
 
     def key(h: RetrievedChunk) -> tuple:
@@ -129,5 +145,5 @@ def _boost_framing(
         kind_boost = 2 if h.chunk_kind in {"stat_row", "query_types"} else 0
         return (name_hit + kind_boost, h.score)
 
-    merged = { (h.source_file, h.section_title, h.text[:80]): h for h in extra + hits }
+    merged = {(h.source_file, h.section_title, h.text[:80]): h for h in extra + hits}
     return sorted(merged.values(), key=key, reverse=True)

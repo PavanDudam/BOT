@@ -1,14 +1,18 @@
 from __future__ import annotations
 
+import time
+
 from fastapi import APIRouter, HTTPException
 
 from app.api.schemas import ChatRequest, ChatResponse, HealthResponse
 from app.config import get_settings
+from app.logging_utils import get_logger
 from app.rag.embeddings import get_embedder
 from app.rag.generator import answer_question
 from app.rag.ingest import get_qdrant
 
 router = APIRouter()
+logger = get_logger("athlyte.api")
 
 
 @router.get("/health", response_model=HealthResponse)
@@ -48,9 +52,19 @@ def chat(body: ChatRequest) -> ChatResponse:
     question = body.question.strip()
     if not question:
         raise HTTPException(status_code=400, detail="question is required")
+    t0 = time.perf_counter()
     try:
-        return answer_question(question)
+        result = answer_question(question)
+        logger.info(
+            "api.chat | status=ok grounded=%s intent=%s total=%.1fms",
+            result.grounded,
+            result.intent,
+            (time.perf_counter() - t0) * 1000,
+        )
+        return result
     except RuntimeError as exc:
+        logger.exception("api.chat | status=error total=%.1fms", (time.perf_counter() - t0) * 1000)
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     except Exception as exc:  # noqa: BLE001
+        logger.exception("api.chat | status=error total=%.1fms", (time.perf_counter() - t0) * 1000)
         raise HTTPException(status_code=500, detail=f"chat failed: {exc}") from exc
