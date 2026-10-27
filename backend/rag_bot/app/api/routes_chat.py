@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException
 
 from app.api.schemas import ChatRequest, ChatResponse, HealthResponse
 from app.config import get_settings
+from app.rag.embeddings import get_embedder
 from app.rag.generator import answer_question
 from app.rag.ingest import get_qdrant
 
@@ -14,6 +15,13 @@ router = APIRouter()
 def health() -> HealthResponse:
     settings = get_settings()
     mode = settings.qdrant_url or f"local:{settings.qdrant_path}"
+
+    try:
+        get_embedder()
+        embeddings_status = f"ready ({settings.embedding_model})"
+    except Exception as exc:  # noqa: BLE001
+        embeddings_status = f"error: {exc}"
+
     try:
         client = get_qdrant()
         exists = client.collection_exists(settings.qdrant_collection)
@@ -23,11 +31,15 @@ def health() -> HealthResponse:
             status="degraded",
             qdrant=f"error: {exc}",
             collection=settings.qdrant_collection,
+            embeddings=embeddings_status,
         )
+
+    ready = exists and embeddings_status.startswith("ready")
     return HealthResponse(
-        status="ok" if exists else "degraded",
+        status="ok" if ready else "degraded",
         qdrant=qdrant_status,
         collection=settings.qdrant_collection,
+        embeddings=embeddings_status,
     )
 
 

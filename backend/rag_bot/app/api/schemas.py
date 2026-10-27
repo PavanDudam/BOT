@@ -22,3 +22,4 @@ class HealthResponse(BaseModel):
     status: str
     qdrant: str
     collection: str
+    embeddings: str = "unknown"
