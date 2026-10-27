@@ -33,7 +33,8 @@ To use local on-disk Qdrant instead (no Docker), set `QDRANT_URL=` empty in `.en
 
 ## Ingest docs
 
-Uses Gemini model `gemini-3.5-flash` by default (override with `GEMINI_MODEL`).
+Uses Gemini model `gemini-3.5-flash-lite` by default (`GEMINI_MODEL`), `GEMINI_TEMPERATURE=0`.
+Streaming chat: `POST /api/chat/stream` (SSE). Sync chat still at `POST /api/chat`.
 
 First run downloads the BGE ONNX model via fastembed.
 

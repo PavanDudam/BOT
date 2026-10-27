@@ -3,12 +3,13 @@ from __future__ import annotations
 import time
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
 
 from app.api.schemas import ChatRequest, ChatResponse, HealthResponse
 from app.config import get_settings
 from app.logging_utils import get_logger
 from app.rag.embeddings import get_embedder
-from app.rag.generator import answer_question
+from app.rag.generator import answer_question, stream_answer
 from app.rag.ingest import get_qdrant
 
 router = APIRouter()
@@ -68,3 +69,21 @@ def chat(body: ChatRequest) -> ChatResponse:
     except Exception as exc:  # noqa: BLE001
         logger.exception("api.chat | status=error total=%.1fms", (time.perf_counter() - t0) * 1000)
         raise HTTPException(status_code=500, detail=f"chat failed: {exc}") from exc
+
+
+@router.post("/chat/stream")
+def chat_stream(body: ChatRequest) -> StreamingResponse:
+    question = body.question.strip()
+    if not question:
+        raise HTTPException(status_code=400, detail="question is required")
+
+    logger.info("api.chat_stream | start")
+    return StreamingResponse(
+        stream_answer(question),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )

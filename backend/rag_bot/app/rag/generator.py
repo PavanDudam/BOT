@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
 import time
+from collections.abc import Iterator
+from typing import Any
 
 from google import genai
 from google.genai import types
@@ -68,11 +71,8 @@ def _usage_dict(response) -> dict[str, int | None]:
     }
 
 
-def answer_question(question: str) -> ChatResponse:
-    t0 = time.perf_counter()
-    preview = question.replace("\n", " ")[:120]
-    logger.info("chat.start | question=%r", preview)
-
+def _prepare(question: str) -> tuple[str, str | None, list[RetrievedChunk], str, str]:
+    """Intent + retrieve + prompt. Empty chunks means refuse path."""
     with timed(logger, "chat.intent"):
         intent = detect_intent(question)
         stat_hint = extract_stat_hint(question)
@@ -83,10 +83,39 @@ def answer_question(question: str) -> ChatResponse:
 
     settings = get_settings()
     strong = [c for c in chunks if c.score >= settings.score_threshold]
-    if intent == "query_framing":
-        useful = chunks
-    else:
-        useful = strong or chunks
+    useful = chunks if intent == "query_framing" else (strong or chunks)
+
+    if not useful:
+        return intent, stat_hint, [], "", ""
+
+    context = _format_context(useful)
+    prompt = build_user_prompt(intent, question, context, stat_hint=stat_hint)
+    logger.info(
+        "chat.prompt | model=%s temp=%s chunks=%s context_chars=%s prompt_chars=%s stat_hint=%s",
+        settings.gemini_model,
+        settings.gemini_temperature,
+        len(useful),
+        len(context),
+        len(prompt),
+        stat_hint or "-",
+    )
+    return intent, stat_hint, useful, context, prompt
+
+
+def _gen_config() -> types.GenerateContentConfig:
+    settings = get_settings()
+    return types.GenerateContentConfig(
+        system_instruction=SYSTEM_BASE,
+        temperature=settings.gemini_temperature,
+    )
+
+
+def answer_question(question: str) -> ChatResponse:
+    t0 = time.perf_counter()
+    preview = question.replace("\n", " ")[:120]
+    logger.info("chat.start | question=%r mode=sync", preview)
+
+    intent, _stat_hint, useful, _context, prompt = _prepare(question)
 
     if not useful:
         total_ms = (time.perf_counter() - t0) * 1000
@@ -98,17 +127,7 @@ def answer_question(question: str) -> ChatResponse:
             grounded=False,
         )
 
-    context = _format_context(useful)
-    prompt = build_user_prompt(intent, question, context)
-    logger.info(
-        "chat.prompt | model=%s chunks=%s context_chars=%s prompt_chars=%s system_chars=%s",
-        settings.gemini_model,
-        len(useful),
-        len(context),
-        len(prompt),
-        len(SYSTEM_BASE),
-    )
-
+    settings = get_settings()
     client = _gemini_client()
     last_error: Exception | None = None
     response = None
@@ -120,10 +139,7 @@ def answer_question(question: str) -> ChatResponse:
                 response = client.models.generate_content(
                     model=settings.gemini_model,
                     contents=prompt,
-                    config=types.GenerateContentConfig(
-                        system_instruction=SYSTEM_BASE,
-                        temperature=0.2,
-                    ),
+                    config=_gen_config(),
                 )
                 break
             except Exception as exc:  # noqa: BLE001
@@ -174,3 +190,90 @@ def answer_question(question: str) -> ChatResponse:
         citations=citations,
         grounded=True,
     )
+
+
+def _sse(payload: dict[str, Any]) -> str:
+    return f"data: {json.dumps(payload, ensure_ascii=False)}\n\n"
+
+
+def stream_answer(question: str) -> Iterator[str]:
+    """Yield SSE events: meta → token* → done | error | refuse."""
+    t0 = time.perf_counter()
+    preview = question.replace("\n", " ")[:120]
+    logger.info("chat.start | question=%r mode=stream", preview)
+
+    try:
+        intent, _stat_hint, useful, _context, prompt = _prepare(question)
+
+        if not useful:
+            total_ms = (time.perf_counter() - t0) * 1000
+            logger.info("chat.refuse | reason=no_chunks total=%.1fms", total_ms)
+            yield _sse(
+                {
+                    "type": "meta",
+                    "intent": intent,
+                    "citations": [],
+                    "grounded": False,
+                }
+            )
+            yield _sse({"type": "token", "text": REFUSAL_MESSAGE})
+            yield _sse({"type": "done", "grounded": False, "total_ms": round(total_ms, 1)})
+            return
+
+        citations = [c.model_dump() for c in _citations(useful)]
+        yield _sse(
+            {
+                "type": "meta",
+                "intent": intent,
+                "citations": citations,
+                "grounded": True,
+            }
+        )
+
+        settings = get_settings()
+        client = _gemini_client()
+        answer_parts: list[str] = []
+        last_usage = None
+
+        with timed(logger, "chat.gemini_stream", model=settings.gemini_model) as gemini_timing:
+            stream = client.models.generate_content_stream(
+                model=settings.gemini_model,
+                contents=prompt,
+                config=_gen_config(),
+            )
+            for chunk in stream:
+                piece = getattr(chunk, "text", None) or ""
+                if piece:
+                    answer_parts.append(piece)
+                    yield _sse({"type": "token", "text": piece})
+                if getattr(chunk, "usage_metadata", None) is not None:
+                    last_usage = chunk
+
+        usage = _usage_dict(last_usage) if last_usage else _usage_dict(None)
+        total_ms = (time.perf_counter() - t0) * 1000
+        full = "".join(answer_parts).strip()
+        grounded = bool(full)
+        if not full:
+            yield _sse({"type": "token", "text": REFUSAL_MESSAGE})
+            grounded = False
+
+        logger.info(
+            "chat.tokens | model=%s prompt_tokens=%s output_tokens=%s total_tokens=%s gemini_ms=%.1f",
+            settings.gemini_model,
+            usage["prompt_tokens"],
+            usage["output_tokens"],
+            usage["total_tokens"],
+            gemini_timing.get("ms", 0.0),
+        )
+        logger.info(
+            "chat.done | grounded=%s intent=%s answer_chars=%s citations=%s total=%.1fms mode=stream",
+            grounded,
+            intent,
+            len(full),
+            len(citations),
+            total_ms,
+        )
+        yield _sse({"type": "done", "grounded": grounded, "total_ms": round(total_ms, 1)})
+    except Exception as exc:  # noqa: BLE001
+        logger.exception("chat.stream_error")
+        yield _sse({"type": "error", "message": str(exc)})

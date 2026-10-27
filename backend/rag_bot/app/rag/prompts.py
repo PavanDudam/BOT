@@ -12,7 +12,18 @@ If CONTEXT says a search like "Rushing Yards" defaults to another named stat (e.
 Mention common search aliases only if present in CONTEXT.
 """
 
-QUERY_FRAMING_INSTRUCTIONS = """The user asked how to frame / write Athlyte search queries for a statistic.
+QUERY_FRAMING_INSTRUCTIONS = """The user asked how to frame / write Athlyte search queries for ONE target statistic.
+
+TARGET STATISTIC: {stat_name}
+
+Hard rules:
+- Every example query MUST be about the TARGET STATISTIC only.
+- NEVER leave another statistic name in an example (e.g. do not keep "rushing yards" if the target is sacks).
+- If CONTEXT shows a template that uses a different stat (often Count / Rank / Trend examples), KEEP the sentence pattern but REPLACE that other stat with the TARGET STATISTIC.
+- Prefer example queries already written in CONTEXT for the TARGET STATISTIC when available.
+- Use the canonical / alias names for the TARGET STATISTIC from CONTEXT when present.
+- Do not invent unsupported product behavior.
+
 Using CONTEXT, output a labeled list with EXACTLY ONE example query for EACH Athlyte query type found in CONTEXT.
 Cover these types when present in CONTEXT:
 1. Stat Search (Basic)
@@ -24,9 +35,8 @@ Cover these types when present in CONTEXT:
 7. Count
 8. Rank
 9. Trend
-Prefer example queries already written in CONTEXT for that statistic.
-For types that only have a generic template in CONTEXT, adapt that template to the same statistic—do not invent unsupported product behavior.
-Start with one short intro sentence, then the numbered examples.
+
+Start with one short intro sentence naming the TARGET STATISTIC, then the numbered examples.
 """
 
 GENERAL_INSTRUCTIONS = """Answer the user's Athlyte platform question using CONTEXT only.
@@ -40,11 +50,18 @@ REFUSAL_MESSAGE = (
 )
 
 
-def build_user_prompt(intent: str, question: str, context: str) -> str:
+def build_user_prompt(
+    intent: str,
+    question: str,
+    context: str,
+    *,
+    stat_hint: str | None = None,
+) -> str:
     if intent == "definition":
         extra = DEFINITION_INSTRUCTIONS
     elif intent == "query_framing":
-        extra = QUERY_FRAMING_INSTRUCTIONS
+        target = (stat_hint or "the statistic named in the user question").strip()
+        extra = QUERY_FRAMING_INSTRUCTIONS.format(stat_name=target)
     else:
         extra = GENERAL_INSTRUCTIONS
     return (

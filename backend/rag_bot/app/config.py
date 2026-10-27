@@ -15,7 +15,8 @@ class Settings(BaseSettings):
     )
 
     google_api_key: str = ""
-    gemini_model: str = "gemini-3.5-flash"
+    gemini_model: str = "gemini-3.5-flash-lite"
+    gemini_temperature: float = 0.0
     embedding_model: str = "BAAI/bge-base-en-v1.5"
     # Default: Docker Qdrant. Set empty to fall back to local embedded store at qdrant_path.
     qdrant_url: str = "http://localhost:6333"
