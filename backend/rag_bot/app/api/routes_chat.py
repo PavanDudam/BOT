@@ -8,6 +8,7 @@ from fastapi.responses import StreamingResponse
 from app.api.schemas import ChatRequest, ChatResponse, HealthResponse
 from app.config import get_settings
 from app.logging_utils import get_logger
+from app.okf.bundle import bundle_status
 from app.rag.embeddings import get_embedder
 from app.rag.generator import answer_question, stream_answer
 from app.rag.ingest import get_qdrant
@@ -27,6 +28,8 @@ def health() -> HealthResponse:
     except Exception as exc:  # noqa: BLE001
         embeddings_status = f"error: {exc}"
 
+    okf_ok, okf_status = bundle_status()
+
     try:
         client = get_qdrant()
         exists = client.collection_exists(settings.qdrant_collection)
@@ -37,14 +40,24 @@ def health() -> HealthResponse:
             qdrant=f"error: {exc}",
             collection=settings.qdrant_collection,
             embeddings=embeddings_status,
+            okf_bundle=okf_status,
         )
 
-    ready = exists and embeddings_status.startswith("ready")
+    ready = exists and embeddings_status.startswith("ready") and okf_ok
+    # RAG-only can still be ok if OKF missing; mark degraded so UI knows
+    if exists and embeddings_status.startswith("ready") and not okf_ok:
+        status = "degraded"
+    elif ready:
+        status = "ok"
+    else:
+        status = "degraded"
+
     return HealthResponse(
-        status="ok" if ready else "degraded",
+        status=status,
         qdrant=qdrant_status,
         collection=settings.qdrant_collection,
         embeddings=embeddings_status,
+        okf_bundle=okf_status,
     )
 
 
@@ -55,14 +68,18 @@ def chat(body: ChatRequest) -> ChatResponse:
         raise HTTPException(status_code=400, detail="question is required")
     t0 = time.perf_counter()
     try:
-        result = answer_question(question)
+        result = answer_question(question, bot=body.bot)
         logger.info(
-            "api.chat | status=ok grounded=%s intent=%s total=%.1fms",
+            "api.chat | status=ok bot=%s grounded=%s intent=%s total=%.1fms",
+            body.bot,
             result.grounded,
             result.intent,
             (time.perf_counter() - t0) * 1000,
         )
         return result
+    except FileNotFoundError as exc:
+        logger.exception("api.chat | status=error bot=%s", body.bot)
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
     except RuntimeError as exc:
         logger.exception("api.chat | status=error total=%.1fms", (time.perf_counter() - t0) * 1000)
         raise HTTPException(status_code=500, detail=str(exc)) from exc
@@ -77,9 +94,9 @@ def chat_stream(body: ChatRequest) -> StreamingResponse:
     if not question:
         raise HTTPException(status_code=400, detail="question is required")
 
-    logger.info("api.chat_stream | start")
+    logger.info("api.chat_stream | start bot=%s", body.bot)
     return StreamingResponse(
-        stream_answer(question),
+        stream_answer(question, bot=body.bot),
         media_type="text/event-stream",
         headers={
             "Cache-Control": "no-cache",

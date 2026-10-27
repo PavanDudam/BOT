@@ -1,7 +1,10 @@
+export type BotName = "rag" | "okf" | "mixed";
+
 export type Citation = {
   source: string;
   section: string;
   snippet: string;
+  system?: string | null;
 };
 
 export type ChatResponse = {
@@ -9,22 +12,28 @@ export type ChatResponse = {
   intent: string;
   citations: Citation[];
   grounded: boolean;
+  bot: BotName;
 };
 
 export type StreamHandlers = {
-  onMeta?: (meta: { intent: string; citations: Citation[]; grounded: boolean }) => void;
+  onMeta?: (meta: {
+    bot: BotName;
+    intent: string;
+    citations: Citation[];
+    grounded: boolean;
+  }) => void;
   onToken?: (text: string) => void;
-  onDone?: (info: { grounded: boolean; total_ms?: number }) => void;
+  onDone?: (info: { grounded: boolean; bot?: BotName; total_ms?: number }) => void;
   onError?: (message: string) => void;
 };
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
-export async function askBot(question: string): Promise<ChatResponse> {
+export async function askBot(question: string, bot: BotName = "rag"): Promise<ChatResponse> {
   const res = await fetch(`${API_BASE}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question }),
+    body: JSON.stringify({ question, bot }),
   });
 
   if (!res.ok) {
@@ -41,11 +50,15 @@ export async function askBot(question: string): Promise<ChatResponse> {
   return res.json();
 }
 
-export async function askBotStream(question: string, handlers: StreamHandlers): Promise<void> {
+export async function askBotStream(
+  question: string,
+  handlers: StreamHandlers,
+  bot: BotName = "rag",
+): Promise<void> {
   const res = await fetch(`${API_BASE}/api/chat/stream`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
-    body: JSON.stringify({ question }),
+    body: JSON.stringify({ question, bot }),
   });
 
   if (!res.ok || !res.body) {
@@ -82,6 +95,7 @@ export async function askBotStream(question: string, handlers: StreamHandlers): 
 
       let event: {
         type: string;
+        bot?: BotName;
         intent?: string;
         citations?: Citation[];
         grounded?: boolean;
@@ -97,6 +111,7 @@ export async function askBotStream(question: string, handlers: StreamHandlers): 
 
       if (event.type === "meta") {
         handlers.onMeta?.({
+          bot: event.bot ?? bot,
           intent: event.intent ?? "general",
           citations: event.citations ?? [],
           grounded: Boolean(event.grounded),
@@ -106,6 +121,7 @@ export async function askBotStream(question: string, handlers: StreamHandlers): 
       } else if (event.type === "done") {
         handlers.onDone?.({
           grounded: Boolean(event.grounded),
+          bot: event.bot ?? bot,
           total_ms: event.total_ms,
         });
       } else if (event.type === "error") {

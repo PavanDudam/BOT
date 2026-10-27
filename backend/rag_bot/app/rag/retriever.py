@@ -20,6 +20,7 @@ class RetrievedChunk:
     chunk_kind: str
     stat_name: str
     score: float
+    system: str | None = None
 
 
 def _to_chunk(point) -> RetrievedChunk:
@@ -31,6 +32,7 @@ def _to_chunk(point) -> RetrievedChunk:
         chunk_kind=payload.get("chunk_kind", "prose"),
         stat_name=payload.get("stat_name", ""),
         score=float(point.score or 0.0),
+        system="rag",
     )
 
 

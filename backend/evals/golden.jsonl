@@ -1,0 +1,20 @@
+{"id":"def_rushing","question":"What is rushing yards?","intent":"definition","notes":"stat definition"}
+{"id":"def_passing","question":"What is passing yards?","intent":"definition","notes":"stat definition"}
+{"id":"def_sacks","question":"Define sacks","intent":"definition","notes":"defense stat"}
+{"id":"frame_rushing","question":"How to frame query using rushing yards","intent":"query_framing","notes":"should surface query types"}
+{"id":"frame_streak","question":"How to write a streak query","intent":"query_framing","notes":"query type focus"}
+{"id":"frame_last_time","question":"How to frame a last time query","intent":"query_framing","notes":"LTW framing"}
+{"id":"frame_records","question":"Example queries for records","intent":"query_framing","notes":"records examples"}
+{"id":"gen_sports","question":"What sports does Athlyte Search support?","intent":"general","notes":"platform overview"}
+{"id":"gen_dashboard","question":"How do I open the Team Dashboard?","intent":"general","notes":"navigation"}
+{"id":"gen_export","question":"How do I export report records?","intent":"general","notes":"export guide"}
+{"id":"def_interceptions","question":"What is interceptions?","intent":"definition","notes":"stat"}
+{"id":"frame_complex","question":"How to frame a complex query using passing yards","intent":"query_framing","notes":"complex + stat"}
+{"id":"gen_filters","question":"What filters can I apply to search results?","intent":"general","notes":"search filters"}
+{"id":"def_field_goals","question":"What are field goals made?","intent":"definition","notes":"special teams"}
+{"id":"frame_rank","question":"How to write a rank query","intent":"query_framing","notes":"rank type"}
+{"id":"gen_data_centre","question":"What is the Data Centre in Athlyte Search?","intent":"general","notes":"product area"}
+{"id":"def_tackles","question":"What is tackles for loss?","intent":"definition","notes":"defense"}
+{"id":"frame_count","question":"How to frame a count query","intent":"query_framing","notes":"count type"}
+{"id":"gen_player_dash","question":"What sections are on the player dashboard?","intent":"general","notes":"R3 / navigation"}
+{"id":"def_receiving","question":"What is receiving yards?","intent":"definition","notes":"offense"}

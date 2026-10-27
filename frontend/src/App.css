@@ -49,6 +49,72 @@
   line-height: 1.5;
 }
 
+.bot-switcher {
+  display: inline-flex;
+  margin-top: 1.1rem;
+  padding: 0.2rem;
+  gap: 0.2rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.bot-tab {
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  border-radius: 999px;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.bot-tab:hover:not(:disabled):not(.active) {
+  background: rgba(31, 122, 85, 0.08);
+}
+
+.bot-tab.active {
+  background: var(--ink);
+  color: #f3f8f4;
+}
+
+.bot-tab:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bot-hint {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.bot-badge {
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.bot-badge.bot-rag {
+  background: rgba(31, 122, 85, 0.14);
+  color: var(--field);
+}
+
+.bot-badge.bot-okf {
+  background: rgba(47, 92, 168, 0.14);
+  color: #2f5ca8;
+}
+
+.bot-badge.bot-mixed {
+  background: rgba(150, 90, 30, 0.14);
+  color: #965a1e;
+}
+
 .panel {
   position: relative;
   background: rgba(244, 247, 242, 0.78);

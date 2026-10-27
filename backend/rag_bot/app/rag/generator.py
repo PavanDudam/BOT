@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import time
 from collections.abc import Iterator
-from typing import Any
+from typing import Any, Literal
 
 from google import genai
 from google.genai import types
@@ -11,12 +11,16 @@ from google.genai import types
 from app.api.schemas import ChatResponse, Citation
 from app.config import get_settings
 from app.logging_utils import get_logger, timed
+from app.mixed import retriever as mixed_retriever
+from app.okf import retriever as okf_retriever
 from app.rag.intent import QUERY_TYPE_LABELS, analyze_question
 from app.rag.prompts import REFUSAL_MESSAGE, SYSTEM_BASE, build_user_prompt
-from app.rag.retriever import RetrievedChunk, retrieve
+from app.rag.retriever import RetrievedChunk, retrieve as rag_retrieve
 from app.rag.text_clean import clean_plain_text
 
 logger = get_logger("athlyte.chat")
+
+BotName = Literal["rag", "okf", "mixed"]
 
 
 def _format_context(chunks: list[RetrievedChunk]) -> str:
@@ -25,15 +29,17 @@ def _format_context(chunks: list[RetrievedChunk]) -> str:
         header = f"[{i}] {chunk.source_file} | {chunk.section_title} | kind={chunk.chunk_kind}"
         if chunk.stat_name:
             header += f" | stat={chunk.stat_name}"
+        if chunk.system:
+            header += f" | system={chunk.system}"
         parts.append(f"{header}\n{chunk.text}")
     return "\n\n".join(parts)
 
 
 def _citations(chunks: list[RetrievedChunk]) -> list[Citation]:
-    seen: set[tuple[str, str]] = set()
+    seen: set[tuple[str, str, str | None]] = set()
     out: list[Citation] = []
     for chunk in chunks:
-        key = (chunk.source_file, chunk.section_title)
+        key = (chunk.source_file, chunk.section_title, chunk.system)
         if key in seen:
             continue
         seen.add(key)
@@ -45,6 +51,7 @@ def _citations(chunks: list[RetrievedChunk]) -> list[Citation]:
                 source=chunk.source_file,
                 section=chunk.section_title,
                 snippet=snippet,
+                system=chunk.system,
             )
         )
     return out[:8]
@@ -72,7 +79,30 @@ def _usage_dict(response) -> dict[str, int | None]:
     }
 
 
-def _prepare(question: str) -> tuple[str, str | None, list[RetrievedChunk], str, str]:
+def _dispatch_retrieve(
+    bot: BotName,
+    question: str,
+    *,
+    intent: str,
+    stat_hint: str | None,
+    query_type: str | None,
+) -> list[RetrievedChunk]:
+    kwargs = {
+        "intent": intent,
+        "stat_hint": stat_hint,
+        "query_type": query_type,
+    }
+    if bot == "okf":
+        return okf_retriever.retrieve(question, **kwargs)
+    if bot == "mixed":
+        return mixed_retriever.retrieve(question, **kwargs)
+    return rag_retrieve(question, **kwargs)
+
+
+def _prepare(
+    question: str,
+    bot: BotName = "rag",
+) -> tuple[str, str | None, list[RetrievedChunk], str, str]:
     """Intent + retrieve + prompt. Empty chunks means refuse path."""
     with timed(logger, "chat.intent"):
         focus = analyze_question(question)
@@ -80,14 +110,16 @@ def _prepare(question: str) -> tuple[str, str | None, list[RetrievedChunk], str,
         stat_hint = focus.stat_hint
         query_type = focus.query_type
     logger.info(
-        "chat.intent.done | intent=%s stat_hint=%s query_type=%s",
+        "chat.intent.done | bot=%s intent=%s stat_hint=%s query_type=%s",
+        bot,
         intent,
         stat_hint or "-",
         query_type or "-",
     )
 
-    with timed(logger, "chat.retrieve", intent=intent):
-        chunks = retrieve(
+    with timed(logger, "chat.retrieve", intent=intent, bot=bot):
+        chunks = _dispatch_retrieve(
+            bot,
             question,
             intent=intent,
             stat_hint=stat_hint,
@@ -95,8 +127,12 @@ def _prepare(question: str) -> tuple[str, str | None, list[RetrievedChunk], str,
         )
 
     settings = get_settings()
-    strong = [c for c in chunks if c.score >= settings.score_threshold]
-    useful = chunks if intent == "query_framing" else (strong or chunks)
+    # OKF/mixed scores are not cosine similarities — skip dense threshold.
+    if bot in {"okf", "mixed"} or intent == "query_framing":
+        useful = chunks
+    else:
+        strong = [c for c in chunks if c.score >= settings.score_threshold]
+        useful = strong or chunks
 
     if not useful:
         return intent, stat_hint, [], "", ""
@@ -111,14 +147,13 @@ def _prepare(question: str) -> tuple[str, str | None, list[RetrievedChunk], str,
         query_type_label=QUERY_TYPE_LABELS.get(query_type or "", query_type),
     )
     logger.info(
-        "chat.prompt | model=%s temp=%s chunks=%s context_chars=%s prompt_chars=%s stat_hint=%s query_type=%s",
+        "chat.prompt | bot=%s model=%s temp=%s chunks=%s context_chars=%s prompt_chars=%s",
+        bot,
         settings.gemini_model,
         settings.gemini_temperature,
         len(useful),
         len(context),
         len(prompt),
-        stat_hint or "-",
-        query_type or "-",
     )
     return intent, stat_hint, useful, context, prompt
 
@@ -131,21 +166,22 @@ def _gen_config() -> types.GenerateContentConfig:
     )
 
 
-def answer_question(question: str) -> ChatResponse:
+def answer_question(question: str, bot: BotName = "rag") -> ChatResponse:
     t0 = time.perf_counter()
     preview = question.replace("\n", " ")[:120]
-    logger.info("chat.start | question=%r mode=sync", preview)
+    logger.info("chat.start | question=%r mode=sync bot=%s", preview, bot)
 
-    intent, _stat_hint, useful, _context, prompt = _prepare(question)
+    intent, _stat_hint, useful, _context, prompt = _prepare(question, bot=bot)
 
     if not useful:
         total_ms = (time.perf_counter() - t0) * 1000
-        logger.info("chat.refuse | reason=no_chunks total=%.1fms", total_ms)
+        logger.info("chat.refuse | reason=no_chunks bot=%s total=%.1fms", bot, total_ms)
         return ChatResponse(
             answer=REFUSAL_MESSAGE,
             intent=intent,
             citations=[],
             grounded=False,
+            bot=bot,
         )
 
     settings = get_settings()
@@ -190,16 +226,18 @@ def answer_question(question: str) -> ChatResponse:
     citations = _citations(useful)
     total_ms = (time.perf_counter() - t0) * 1000
     if not text:
-        logger.info("chat.refuse | reason=empty_model_text total=%.1fms", total_ms)
+        logger.info("chat.refuse | reason=empty_model_text bot=%s total=%.1fms", bot, total_ms)
         return ChatResponse(
             answer=REFUSAL_MESSAGE,
             intent=intent,
             citations=citations,
             grounded=False,
+            bot=bot,
         )
 
     logger.info(
-        "chat.done | grounded=true intent=%s answer_chars=%s citations=%s total=%.1fms",
+        "chat.done | grounded=true bot=%s intent=%s answer_chars=%s citations=%s total=%.1fms",
+        bot,
         intent,
         len(text),
         len(citations),
@@ -210,6 +248,7 @@ def answer_question(question: str) -> ChatResponse:
         intent=intent,
         citations=citations,
         grounded=True,
+        bot=bot,
     )
 
 
@@ -217,34 +256,36 @@ def _sse(payload: dict[str, Any]) -> str:
     return f"data: {json.dumps(payload, ensure_ascii=False)}\n\n"
 
 
-def stream_answer(question: str) -> Iterator[str]:
+def stream_answer(question: str, bot: BotName = "rag") -> Iterator[str]:
     """Yield SSE events: meta → token* → done | error | refuse."""
     t0 = time.perf_counter()
     preview = question.replace("\n", " ")[:120]
-    logger.info("chat.start | question=%r mode=stream", preview)
+    logger.info("chat.start | question=%r mode=stream bot=%s", preview, bot)
 
     try:
-        intent, _stat_hint, useful, _context, prompt = _prepare(question)
+        intent, _stat_hint, useful, _context, prompt = _prepare(question, bot=bot)
 
         if not useful:
             total_ms = (time.perf_counter() - t0) * 1000
-            logger.info("chat.refuse | reason=no_chunks total=%.1fms", total_ms)
+            logger.info("chat.refuse | reason=no_chunks bot=%s total=%.1fms", bot, total_ms)
             yield _sse(
                 {
                     "type": "meta",
+                    "bot": bot,
                     "intent": intent,
                     "citations": [],
                     "grounded": False,
                 }
             )
             yield _sse({"type": "token", "text": REFUSAL_MESSAGE})
-            yield _sse({"type": "done", "grounded": False, "total_ms": round(total_ms, 1)})
+            yield _sse({"type": "done", "grounded": False, "bot": bot, "total_ms": round(total_ms, 1)})
             return
 
         citations = [c.model_dump() for c in _citations(useful)]
         yield _sse(
             {
                 "type": "meta",
+                "bot": bot,
                 "intent": intent,
                 "citations": citations,
                 "grounded": True,
@@ -289,14 +330,15 @@ def stream_answer(question: str) -> Iterator[str]:
             gemini_timing.get("ms", 0.0),
         )
         logger.info(
-            "chat.done | grounded=%s intent=%s answer_chars=%s citations=%s total=%.1fms mode=stream",
+            "chat.done | grounded=%s bot=%s intent=%s answer_chars=%s citations=%s total=%.1fms mode=stream",
             grounded,
+            bot,
             intent,
             len(full),
             len(citations),
             total_ms,
         )
-        yield _sse({"type": "done", "grounded": grounded, "total_ms": round(total_ms, 1)})
+        yield _sse({"type": "done", "grounded": grounded, "bot": bot, "total_ms": round(total_ms, 1)})
     except Exception as exc:  # noqa: BLE001
-        logger.exception("chat.stream_error")
+        logger.exception("chat.stream_error | bot=%s", bot)
         yield _sse({"type": "error", "message": str(exc)})
