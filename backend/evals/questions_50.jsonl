@@ -1,0 +1,50 @@
+{"id":"q01","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What is rushing yards?"}
+{"id":"q02","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What is passing yards?"}
+{"id":"q03","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"Define sacks"}
+{"id":"q04","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What is tackles for loss?"}
+{"id":"q05","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What are interceptions?"}
+{"id":"q06","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What is receiving yards?"}
+{"id":"q07","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What are field goals made?"}
+{"id":"q08","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What is net rushing yards?"}
+{"id":"q09","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What is completion percentage?"}
+{"id":"q10","category":"definition","doc_focus":"Data-Centre/Stat-Search","question":"What are points off turnovers?"}
+{"id":"q11","category":"query_framing","doc_focus":"Search-Functional/Stat-Search","question":"How to frame query using rushing yards"}
+{"id":"q12","category":"query_framing","doc_focus":"Search-Functional","question":"How to write a streak query"}
+{"id":"q13","category":"query_framing","doc_focus":"Search-Functional","question":"How to frame a last time query"}
+{"id":"q14","category":"query_framing","doc_focus":"Search-Functional","question":"Example queries for records"}
+{"id":"q15","category":"query_framing","doc_focus":"Search-Functional","question":"How to frame a complex query using passing yards"}
+{"id":"q16","category":"query_framing","doc_focus":"Search-Functional","question":"How to write a rank query"}
+{"id":"q17","category":"query_framing","doc_focus":"Search-Functional","question":"How to frame a count query"}
+{"id":"q18","category":"query_framing","doc_focus":"Search-Functional","question":"How to frame a trend query"}
+{"id":"q19","category":"query_framing","doc_focus":"Search-Functional","question":"What is the difference between basic and complex stat search?"}
+{"id":"q20","category":"query_framing","doc_focus":"Search-Functional","question":"Do streak queries support qualifiers?"}
+{"id":"q21","category":"platform","doc_focus":"Data-Centre","question":"What sports does Athlyte Search support?"}
+{"id":"q22","category":"platform","doc_focus":"Data-Centre","question":"What is the Data Centre in Athlyte Search?"}
+{"id":"q23","category":"platform","doc_focus":"Data-Centre","question":"What is the standard data range for Men's Football?"}
+{"id":"q24","category":"platform","doc_focus":"Data-Centre","question":"When did advanced metrics start for Men's Football?"}
+{"id":"q25","category":"platform","doc_focus":"Data-Centre","question":"What offense sub-categories exist for MFB players?"}
+{"id":"q26","category":"navigation","doc_focus":"Navigation-Guide","question":"How do I open the Team Dashboard?"}
+{"id":"q27","category":"navigation","doc_focus":"Navigation-Guide","question":"What sections are on the player dashboard?"}
+{"id":"q28","category":"navigation","doc_focus":"Navigation-Guide/R3","question":"What tabs are available on the Team Dashboard?"}
+{"id":"q29","category":"navigation","doc_focus":"Navigation-Guide","question":"How do filters work on search results?"}
+{"id":"q30","category":"navigation","doc_focus":"R3-Features","question":"What is Ask Athlyte?"}
+{"id":"q31","category":"features","doc_focus":"R3-Features","question":"What does the Game Dashboard include?"}
+{"id":"q32","category":"features","doc_focus":"R3-Features","question":"What is Typeahead in Athlyte Search?"}
+{"id":"q33","category":"features","doc_focus":"R3-Features","question":"What can Visualize Data do?"}
+{"id":"q34","category":"features","doc_focus":"R3-Features","question":"What is shown in Team Streaks?"}
+{"id":"q35","category":"features","doc_focus":"R3-Features","question":"What are Season Highs on the Team Dashboard?"}
+{"id":"q36","category":"export","doc_focus":"Export-Report-Records","question":"How do I export report records?"}
+{"id":"q37","category":"export","doc_focus":"Export-Report-Records","question":"How are records grouped in export reports?"}
+{"id":"q38","category":"search","doc_focus":"Search-Functional","question":"What filters can I apply to search results?"}
+{"id":"q39","category":"search","doc_focus":"Search-Functional","question":"What periods are supported for basic queries in Men's Football?"}
+{"id":"q40","category":"search","doc_focus":"Search-Functional","question":"What is Athlyte Query Language (AQL)?"}
+{"id":"q41","category":"search","doc_focus":"Stat-Search-Guide","question":"Give example search queries for rushing yards"}
+{"id":"q42","category":"search","doc_focus":"Stat-Search-Guide","question":"What search terms can I use for sacks?"}
+{"id":"q43","category":"search","doc_focus":"Search-Functional","question":"Can I request multiple time periods in one query?"}
+{"id":"q44","category":"search","doc_focus":"Search-Functional","question":"What appears on the result screen after a search?"}
+{"id":"q45","category":"basketball","doc_focus":"Stat-Search-Guide","question":"What defensive statistics are available for MBB players?"}
+{"id":"q46","category":"basketball","doc_focus":"Data-Centre","question":"What is the standard data range for Men's Basketball?"}
+{"id":"q47","category":"platform","doc_focus":"R3-Features","question":"How does the payment upgrade flow start?"}
+{"id":"q48","category":"edge","doc_focus":"general","question":"What is the weather in New York today?"}
+{"id":"q49","category":"edge","doc_focus":"general","question":"Who won the Super Bowl in 2020?"}
+{"id":"q50","category":"edge","doc_focus":"Data-Centre","question":"Does Athlyte Search support baseball?"}

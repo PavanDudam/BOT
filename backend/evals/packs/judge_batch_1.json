@@ -1,0 +1,262 @@
+[
+  {
+    "id": "q01",
+    "question": "What is rushing yards?",
+    "gold_answer": "In Athlyte Search, a search for Rushing Yards returns Net Rushing Yards. For a player, that is the total yards gained through rushing attempts, adjusted for yards lost on negative rushing plays. For a team, it is yards gained on rushing plays minus yards lost. You can also search rush yards, rush yds, or rushing yds.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "In Athlyte Search, a search for Rushing Yards returns Net Rushing Yards by default. For a player, that is total yards on rushing attempts, adjusted for yards lost on negative rushing plays. For a team, it is yards gained on rushing plays minus yards lost. You can also search rush yards, rush yds, or rushing yds.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 2282.5,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Searching Rushing Yards defaults to Net Rushing Yards: player rushing yards gained, adjusted for yards lost on negative rushing plays. Aliases include rushing yards, rush yards, rush yds, and rushing yds. Related stats in the docs include Rushing Yards Gained (yards before losses) and Rushing Yards Lost.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 368.3,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Rushing Yards maps to Net Rushing Yards. For players, that is rushing attempt yards adjusted for negative plays; for teams, rushing yards gained minus yards lost. Athlyte Search returns Net Rushing Yards by default when you search Rushing Yards. Aliases: rush yards, rush yds, rushing yds.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 78.4,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q02",
+    "question": "What is passing yards?",
+    "gold_answer": "Passing Yards is the total yards gained through completed passes. For a player, it is yards from completed forward passes during the game. For a team, it is yards from completed passes. You can also search pass yards, pass yds, or passing yds.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Passing Yards is yards gained on completed passes. For a player, it is yards from completed forward passes in the game. For a team, it is yards from completed passes. Search pass yards, pass yds, or passing yds.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 51.0,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Passing Yards counts yards gained through completed forward passes by a player during a game. Common search terms are pass yards, pass yds, and passing yds. The docs also cover related stats such as Passing Yards Per Attempt and Passing Yards Lost to Sacks.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 35.2,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Passing Yards is total yards on completed passes—forward passes for players, completed passes for teams. Aliases include pass yards, pass yds, and passing yds.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 94.0,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q03",
+    "question": "Define sacks",
+    "gold_answer": "In Athlyte Search, Sacks maps to Total Sacks. For a player, that is how many times they tackled the opposing quarterback behind the line of scrimmage for a loss of yards. For a team, it is quarterback sacks by the defense. You can also search sacks or defense sacks.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Sacks maps to Total Sacks. For a player, that is how many times they tackled the opposing quarterback behind the line of scrimmage for a loss of yards. For a team, it is quarterback sacks by the defense. You can also search sacks or defense sacks. Solo and assisted sack stats break out credit on the play.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 51.5,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "In player stats, Sacks maps to Total Sacks: times the player tackled the opposing quarterback behind the line of scrimmage for a loss of yards. Aliases are sacks and defense sacks. Assisted Sacks and Unassisted Sacks track shared versus solo credit.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 55.6,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Sacks refers to Total Sacks. For players, it is solo or shared takedowns of the QB behind the line for lost yards; for teams, it is defensive quarterback sacks. Search sacks or defense sacks.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 94.9,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q04",
+    "question": "What is tackles for loss?",
+    "gold_answer": "Tackles for Loss maps to Total Tackles for Loss (also searched as tfl). For a player, it is tackles for loss in a game, including both solo and assisted tackles. For a team, it is tackles that result in negative yardage for the opponent.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Tackles for Loss maps to Total Tackles for Loss (tfl). For a player, it is tackles for loss in a game, including solo and assisted. For a team, it is tackles that produce negative yardage for the opponent.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 58.8,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Total Tackles for Loss (tfl, tackles for loss) is how many tackles for loss a player records in a game, counting both solo and assisted tackles. Assisted and Solo Tackles for Loss split shared versus unassisted stops behind the line.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 50.5,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Tackles for Loss is Total Tackles for Loss. Player totals include solo and assisted TFL; team totals are tackles that cost the opponent yards. Aliases: tfl, tackles for loss.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 131.7,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q05",
+    "question": "What are interceptions?",
+    "gold_answer": "Interceptions is the number of passes intercepted by the team's defense. For a player, Pass Interceptions is how many times they intercepted a forward pass from the opposing team during the game. Search terms include interceptions thrown and pass had intercepted.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Interceptions is passes intercepted by a team's defense. Pass Interceptions is how many times a player intercepted an opposing forward pass. Search terms include interceptions thrown and pass had intercepted. Intercepted Passes is a separate stat for passes a player threw that were picked off.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 40.3,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Interceptions (team) is the number of passes intercepted by the team's defense. Pass Interceptions (player) is how many opposing forward passes a player intercepted. Aliases include interceptions thrown and pass had intercepted.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 110.7,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Team Interceptions counts passes taken by the defense. Player Pass Interceptions counts picks by that player. Use interceptions thrown or pass had intercepted as search terms.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 74.2,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q06",
+    "question": "What is receiving yards?",
+    "gold_answer": "Receiving Yards is the total yards gained through receptions. For a player, Reception Yards (also called Receiving Yards) includes the distance the ball was thrown plus yards after the catch. You can also search receiving yds or rec yds.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Receiving Yards is yards gained on receptions—for teams, total receiving yards. For players, Reception Yards (also called Receiving Yards) includes air yards plus yards after the catch. Search receiving yds or rec yds.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 58.5,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Receiving Yards (team) is total yards on receptions. Reception Yards (player), also called Receiving Yards, is yards on a caught pass including throw distance and yards after the catch. Aliases: receiving yds, rec yds.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 42.2,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Receiving Yards measures yards through receptions. Team Receiving Yards is the team total; player Reception Yards includes yards on the catch plus after-catch yardage. Terms: receiving yds, rec yds.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 108.2,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q07",
+    "question": "What are field goals made?",
+    "gold_answer": "Field Goals Made (FGM) is the number of successful field goals. In Men's Football, it is successful field goals by a player or team. In Men's Basketball, it is successful field goals excluding free throws.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Field Goals Made (FGM) counts successful field goals. In MFB, it is made field goals by a player or team. In MBB, it is made field goals excluding free throws. Distance splits (for example 30+ yards) track makes from long range.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 58.9,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Field Goals Made (FGM) is successful field goals. Player MFB stats count made kicks in a game; MBB defines FGM as made field goals excluding free throws. You can filter by distance buckets such as below 20 yards or 30+ yards.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 39.1,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Field Goals Made (FGM) tracks made field goals—successful kicks for MFB players and teams, and in MBB made field goals other than free throws. Example searches use Players with field goals made or Teams with field goals made.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 112.9,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q08",
+    "question": "What is net rushing yards?",
+    "gold_answer": "Net Rushing Yards is the total yards gained on rushing attempts, adjusted for yards lost on negative rushing plays. For a team, it is yards gained on rushing plays minus yards lost. Athlyte Search returns this by default when you search Rushing Yards (also rush yards, rush yds, or rushing yds).",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Net Rushing Yards is rushing yards net of losses. For a player, rushing yards gained adjusted for negative rushing plays; for a team, rushing yards gained minus yards lost. Searching Rushing Yards returns Net Rushing Yards by default (rush yards, rush yds, rushing yds).",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 61.4,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Net Rushing Yards is rushing yards after subtracting yards lost on negative runs. Athlyte Search returns this stat by default for a Rushing Yards search. Aliases: rushing yards, rush yards, rush yds, rushing yds.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 38.8,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Net Rushing Yards counts rushing yards minus lost yards on negative plays (team) or player rushing yards adjusted for losses. It is the default result for Rushing Yards searches.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 136.0,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q09",
+    "question": "What is completion percentage?",
+    "gold_answer": "Completion percentage in Athlyte Search is Pass Completion Percentage: the percentage of pass attempts completed by a player or a team. You can also search pass comp percent.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Completion percentage is Pass Completion Percentage: share of pass attempts completed, for a player or a team. Search pass comp percent.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 40.3,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Pass Completion Percentage is the percentage of pass attempts a player completes. Search pass comp percent.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 46.8,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Pass Completion Percentage is completion rate on pass attempts—for players or teams depending on your search. Alias: pass comp percent.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 93.9,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q10",
+    "question": "What are points off turnovers?",
+    "gold_answer": "Points off Turnovers is an MFB team statistic: the total points scored after forcing a turnover. In MBB, the related statistic is Points From Turnovers, which is points scored off opponent turnovers.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Points off Turnovers (MFB team) is total points scored after forcing a turnover. In MBB, Points From Turnovers is points scored off opponent turnovers (points from turnover, pts from TO).",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 55.0,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Points off Turnovers is an MFB team stat: points scored after the defense forces a turnover. Points From Turnovers (MBB) is points scored off opponent turnovers; search points from turnover or pts from TO.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 46.9,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Points off Turnovers counts MFB team points following a forced turnover. Points From Turnovers is the MBB team stat for points off opponent turnovers.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 115.3,
+        "n_chunks": 8
+      }
+    }
+  }
+]

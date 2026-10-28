@@ -1,0 +1,262 @@
+[
+  {
+    "id": "q31",
+    "question": "What does the Game Dashboard include?",
+    "gold_answer": "The Game Dashboard shows head-to-head detail for a single game. It includes Player Stats, Team Stats, Roster, and Play-by-Play. You also get an individual player breakdown for both teams (switch categories such as Rushing vs. Receiving with a dropdown), a side-by-side team stats comparison for home and away, and game rosters with a toggle for starters or the full roster. Open it from search results, or from the Dashboard click View Full Schedule and then any game card.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "The Game Dashboard shows head-to-head detail for one game. It includes Player Stats (with a Category dropdown for stat types), Team Stats in a side-by-side comparison for both teams, Rosters for both teams (with a Show dropdown for starters vs full roster), and Play-by-Play of every action in the match.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 60.8,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "The Game Dashboard shows head-to-head detail for a single game. From a specific matchup you get an individual player breakdown for every player on both teams (switch stat categories such as Rushing vs Receiving with a dropdown), a side-by-side team stats comparison for home and away, and game rosters with a toggle for starters or the full roster. Open it from search results, or from the Dashboard choose View Full Schedule and click a game card.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 44.8,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "The Game Dashboard shows head-to-head detail for one game. It includes Player Stats, Team Stats, roster information, and Play-by-Play. You also get per-player stats for both teams (category dropdown), side-by-side team stats, and rosters with a starters vs full roster toggle. Reach it from search results or via View Full Schedule on the Dashboard, then any game card.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 139.4,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q32",
+    "question": "What is Typeahead in Athlyte Search?",
+    "gold_answer": "Typeahead adds real-time autocomplete to Athlyte Search. As you type in the search box, a dropdown appears with matching suggestions you can pick instead of typing the full query.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Typeahead adds real-time autocomplete to search. As you type in the search box, a dropdown appears beneath it with matching suggestions you can pick instead of typing the full query.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 38.1,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 61.6,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Typeahead adds real-time autocomplete to search. As you type in the search box, a dropdown appears beneath it with matching suggestions you can pick instead of typing the full query.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 117.7,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q33",
+    "question": "What can Visualize Data do?",
+    "gold_answer": "Visualize Data adds simple charts to search results. After a search, click the Visualize Data button near the results table to show a chart for the query and period (game or season). It is available on Search Result Screens when a query returns at least one row. Supported query types are Simple, Complex, Records, Last Time When, and Streaks. Simple queries use a horizontal bar chart of the top 10 players who met the condition most often, with number of occurrences. Complex queries use a scatter plot of the top 10 players who met both conditions most frequently. Records (min and max) use a line chart of the first 10 result rows, with each player's record game in the center and up to 3 games before and after. Last Time When uses a line chart of unique players from the results, plotting up to 10 of their games.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Visualize Data adds charts to search results. After a search, click Visualize Data near the results table to open a chart for your query and period (game or season). It is available on Search Result Screens when at least one row is returned. Supported query types include Simple, Complex, Records, Last Time When, and Streaks. Simple queries show a horizontal bar chart of the top 10 players who met the condition most often. Complex queries use a scatter plot for the top 10 who met both conditions most frequently. Record queries use a line chart of the first 10 result rows, centering each player's record game with up to three games before and after. Last Time When plots unique players from the results, up to 10 of their games. Run a search, click Visualize Data on the top right of the table, then close the panel to return to the table.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 37.7,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 64.7,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Visualize Data adds charts to search results. After a search, click Visualize Data near the results table to show a chart for the query and period (game or season). It appears on Search Result Screens when the query returns at least one row. Supported types include Simple, Complex, Records, Last Time When, and Streaks, with bar, scatter, and line charts depending on the query. Open it from the top right of the results table and close the chart panel to restore the table view.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 105.5,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q34",
+    "question": "What is shown in Team Streaks?",
+    "gold_answer": "Team Streaks shows a team's statistical performance for stats across consecutive games. On the Team Dashboard you can open the TEAM STREAKS tab to query consecutive-game streaks for a stat threshold.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 48.9,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 48.6,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 107.5,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q35",
+    "question": "What are Season Highs on the Team Dashboard?",
+    "gold_answer": "Season Highs on the Team Dashboard shows the highest value the team achieved for each statistic in a season, plus the game date it was recorded. Click SEASON HIGHS in the header. You can filter by Season, Category, and Substat. The table columns are Stat Name, Value, and Game Date. Apply filters with the dropdowns, click x to clear, and click any column header to sort.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Season Highs on the Team Dashboard shows the highest value the team achieved for each statistic in a season, plus the game date it was recorded. Click SEASON HIGHS in the header. Filter by Season, Category, and Substat. The table lists Stat Name, Value, and Game Date. Use the dropdowns to filter, click x to clear, and click column headers to sort.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 45.6,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Season Highs shows the highest value the team achieved for each statistic within a season, along with the game date it was recorded. Open the Team Dashboard and click SEASON HIGHS. Filters are Select Season, Select Category, and Select Substat. Columns are Stat Name, Value, and Game Date. Apply filters from the dropdowns, clear with x, and sort by clicking headers.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 46.3,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Season Highs displays the highest value the team achieved for each statistic in a season and the game date it was recorded. On the Team Dashboard, click SEASON HIGHS. You can filter by season, stat category, and substat. The table columns are Stat Name, Value, and Game Date.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 105.8,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q36",
+    "question": "How do I export report records?",
+    "gold_answer": "Export saves your search results locally for offline analysis and record-keeping. Run a search on the Athlyte Search Dashboard, then on the results page click Export at the top right of the table. The system generates a file of your current results. A .xlsx file downloads with the same rows shown in the table, including any filters you applied.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Run your search on the Athlyte Search Dashboard. On the results page, click Export at the top right of the table. The system generates a file of your current results as an Excel (.xlsx) download to your default download folder, including the rows visible in the table with any filters applied.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 41.8,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Perform your search on the Athlyte Search Dashboard, then click Export at the top right of the results page. The system automatically generates a file with your current results. Downloads are Excel (.xlsx) files saved to your device's default download folder and include all data visible in the results table.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 46.9,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "After you run a search, click Export at the top of the results table. A .xlsx file downloads with the same rows shown in the table, including applied filters. Export saves search results locally for offline analysis and record-keeping.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 101.7,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q37",
+    "question": "How are records grouped in export reports?",
+    "gold_answer": "When you view records, they are often grouped by the specific metric, such as Stat: Passing Yards. Each group shows a table of top performers with Entity Name (player or team), Value, and Period (Game/Season) for when the record occurred.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "In the Records view, results are often grouped by the specific metric (for example, Stat: Passing Yards). Each group shows a table of top performers with Entity Name (player or team), Value, and Period (Game/Season) for when the record occurred.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 53.3,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Records are often grouped by the specific metric (for example, Stat: Passing Yards). Each group displays a table of top performers with Entity Name (player or team), Value, and Period (Game/Season) showing which game or season the record occurred in.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 48.0,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Records are often grouped by the specific metric (for example, Stat: Passing Yards). Each group shows a table of top performers with Entity Name (player or team), Value, and Period (Game/Season) for the game or season when the record occurred.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 112.5,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q38",
+    "question": "What filters can I apply to search results?",
+    "gold_answer": "You can refine results in the sidebar without retyping the query. Sidebar filters apply to all query types except Streaks: Opponent and Conference, Game Result (Wins or Losses), Game Type (Regular Season vs Post-season), Date Range, Player Metadata (Name, Position, or Class year), and Period Type (such as first half or overtime). You can also put filters in the search text: team name, conference, or division; player name, class, or position; and game result or game type. On Team results, the Position filter is hidden.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Athlyte Search includes sidebar filters to refine results. They apply to all query types except Streaks. Available filters include Results (match result), Date (custom date range by match date), Name (specific player), and Period Type (time period within a game). For Season queries, the panel also shows Position and Classes.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 48.8,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Use the sidebar to refine results without retyping your query. These filters apply to all query types except Streaks: Opponent and Conference, Game Result (Wins or Losses), Game Type (Regular Season vs Post-season), Date Range, Player Metadata (Name, Position, or Class year), and Period Type (such as first half or overtime). You can also add qualifiers in the search text for team, opponent, conference, division, player name, class, position, game result, and game type. On Team result screens, the Position filter is hidden.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 49.4,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Refine results from the sidebar; filters apply to all query types except Streaks. Options include match result (Results), custom Date range, player Name, Period Type, plus Opponent and Conference, Game Type, and player metadata (Position, Class) where shown. You can also narrow queries with in-text qualifiers for teams, opponents, conferences, players, and game context. Team results hide the Position filter.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 107.5,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q39",
+    "question": "What periods are supported for basic queries in Men's Football?",
+    "gold_answer": "For basic queries in Men's Football (MFB), supported periods are Quarter, Half, Game, Season, and Career. Career is available for Player stats only, not Team stats. A sport must be selected before starting a query.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "For basic queries in Men's Football (MFB), supported periods are Quarter, Half, Game, Season, and Career. Select a sport before starting a query. Career is available for Player stats only, not Team stats.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 55.7,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 51.8,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "For basic queries in Men's Football (MFB), supported periods are Quarter, Half, Game, Season, and Career. A sport must be selected before you start a query. Career applies to Player stats only, not Team stats.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 112.8,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q40",
+    "question": "What is Athlyte Query Language (AQL)?",
+    "gold_answer": "Athlyte Query Language (AQL) is the structured query format Athlyte Search uses after a natural language query is transformed so a program or database can fetch the right information. The standard fields are query_type, entity, qualifiers, stat_period, conditions, streak_len, periods, and period_type. For example, the query \"The highest punt returns yards accomplished during a season\" becomes query_type max, entity player, stat_period season, and conditions s_punt_returns_yards.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Athlyte Query Language (AQL) is the structured format Athlyte Search uses after your natural language query is transformed so a program or database can fetch the right data. Standard fields include query_type, entity, qualifiers, stat_period, conditions, streak_len, periods, and period_type. Example: \"The highest punt returns yards accomplished during a season\" maps to query_type max, entity player, stat_period season, and conditions s_punt_returns_yards.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 64.9,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 40.5,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Athlyte Query Language (AQL) turns a natural language query into a structured query a database can execute. Fields include query_type, entity, qualifiers, stat_period, conditions, streak_len, periods, and period_type. For example, a season record for punt return yards becomes query_type max, entity player, stat_period season, and conditions s_punt_returns_yards.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 106.4,
+        "n_chunks": 8
+      }
+    }
+  }
+]

@@ -1,0 +1,262 @@
+[
+  {
+    "id": "q11",
+    "question": "How to frame query using rushing yards",
+    "gold_answer": "A search for Rushing Yards defaults to Net Rushing Yards: yards gained on rushes, minus yards lost on negative rushing plays. Use terms like rushing yards, rush yards, rush yds, or rushing yds.\n\n1. Basic: Players with 10+ net rushing yards\n2. Record: Highest net rushing yards in a game\n3. Last Time: Last time a player had 5+ net rushing yards\n4. Streak: 3+ consecutive games with 2+ net rushing yards",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Use natural-language stat search with the rushing stat you need. Rushing Yards Gained uses search terms like \"rushing gain\" or \"rush gain.\" Examples: Players with 10+ rushing yards gained; Highest rushing yards gained in a game; Last time a player had 5+ rushing yards gained; 3+ consecutive games with 2+ rushing yards gained. For a single-threshold lookup, try Basic stat search, e.g. Players with rushing yards greater than 10. You can also use Count, Rank, or Trend query shapes shown in the docs (such as rushing-yard count or rank examples).",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 76.3,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "A search for \"rushing yards\" defaults to Net Rushing Yards (yards gained on rushes, adjusted for yards lost on negative rushing plays). Search terms include rushing yards, rush yards, rush yds, or rushing yds. Example query patterns: Players with 10+ net rushing yards; Highest net rushing yards in a game; Last time a player had 5+ net rushing yards; 3+ consecutive games with 2+ net rushing yards. You can run these through Basic, Complex, Records, Last Time, Streaks, Count, Rank, or Trend query types.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 57.0,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Searching \"rushing yards\" maps to Net Rushing Yards by default—total rushing yards minus yards lost on negative plays (for players and teams). Use terms like rushing yards, rush yards, rush yds, or rushing yds. Examples: Players with 10+ net rushing yards; Highest net rushing yards in a game; Last time a player had 5+ net rushing yards; 3+ consecutive games with 2+ net rushing yards. Related stats include Rushing Yards Gained (\"rushing gain\" / \"rush gain\") if you want yards before losses only.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 118.9,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q12",
+    "question": "How to write a streak query",
+    "gold_answer": "A Streak query finds consecutive-game performance. Use 1 or 2 stats, game period only. Qualifiers are not supported. Game is the supported period for MFB, MBB, and WBB.\n\n- Players with 12 receiving yards over 6 consecutive games\n- 3+ consecutive games with 2+ assists\n- players with > 50 rushing yards in consecutive games",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Use a Streak query for consecutive-game performance. It supports 1 or 2 stats, game period only, and qualifiers are not supported. Supported period for MFB, MBB, and WBB is Game. Example: Players with 12 receiving yards over 6 consecutive games. In plain language, use phrasing like \"consecutive games\" or \"straight games,\" e.g. 3+ consecutive games with 2+ blocks or 3+ consecutive games with a touchdown.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 82.9,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 41.0,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Streak queries track consecutive-game performance with 1 or 2 stats, game period only, and no qualifiers. Game is the supported streak period for MFB, MBB, and WBB. Example: Players with 12 receiving yards over 6 consecutive games. Stat examples also use patterns like 3+ consecutive games with 2+ assists or caused turnovers.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 198.6,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q13",
+    "question": "How to frame a last time query",
+    "gold_answer": "A Last Time query (also called Last Time Was or LTW) finds the most recent occurrence matching up to 3 stats. Qualifiers and periods are supported.\n\nSupported periods: MFB and WBB — Quarter, Half, Game, Season, Career. MBB — Half, Game, Season, Career.\n\n- Last time any team had at least 3 touchdowns in a game\n- Last time a team had 50+ rebounds?\n- Last time a player had 5+ assists",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Use a Last Time (Last Time Was / LTW) query to find the most recent match for up to 3 stats. Qualifiers and periods are supported. Supported periods: MFB and WBB—Quarter, Half, Game, Season, Career; MBB—Half, Game, Season, Career. Start with \"last time,\" e.g. Last time any team had at least 3 touchdowns in a game or Last time my team had more than 8 turnovers in a season.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 83.1,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Last Time finds the most recent occurrence matching up to 3 stats, with qualifiers and periods supported. Example: Last time any team had at least 3 touchdowns in a game. Pair it with any stat—stat pages show Last Time examples such as Last time a player had 5+ assists.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 52.5,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Last Time (LTW) returns the most recent match for up to 3 stats; qualifiers and periods are supported. Periods: MFB and WBB—Quarter, Half, Game, Season, Career; MBB—Half, Game, Season, Career. Example: Last time any team had at least 3 touchdowns in a game. You can also phrase it as Last time a team had 5+ leading time or similar stat-specific thresholds from the stat catalog.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 129.4,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q14",
+    "question": "Example queries for records",
+    "gold_answer": "A Record query finds the best or worst value for a single stat. Qualifiers and periods are supported.\n\nSupported periods: MFB and WBB — Quarter, Half, Game, Season, Career. MBB — Half, Game, Season, Career.\n\n- Highest points in a game\n- Who has the record for assists?\n- Line Backers with lowest number of touchdowns in a season",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Record searches find highest or lowest values for a single stat; qualifiers and periods are supported. Periods: MFB and WBB—Quarter, Half, Game, Season, Career; MBB—Half, Game, Season, Career. Examples: Highest number of touchdowns scored; Highest points in a game; Who has the record for assists?; Line Backers with lowest number of touchdowns in a season; Lowest turnovers by the team in a season.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 67.2,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Use Records (Maximum / Minimum) with a single stat. Stat pages show Record examples such as: Highest total tackles for loss in a game; Most tackle for loss yards by a team in a season; Highest points responsible for in a game; Highest solo tackles for loss in a game.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 67.3,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Record queries target best or worst single-stat values with qualifiers and periods supported (MFB/WBB: Quarter, Half, Game, Season, Career; MBB: Half, Game, Season, Career). Doc examples include Highest number of touchdowns scored and Line Backers with lowest number of touchdowns in a season. Stat catalog Record examples include Highest total tackles for loss in a game and Most tackle for loss yards by a team in a season.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 224.3,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q15",
+    "question": "How to frame a complex query using passing yards",
+    "gold_answer": "For a complex query with passing yards, combine 1 to 3 stats with conditions in one search. Complex searches support qualifiers and a single period. Example shape from the docs: Teams with at least 20 passing attempts and three field goals made in a game. So you can write something like players or teams with passing yards above a threshold AND another related stat in the same game or season period.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Use Stat Search (Complex) to combine 1 to 3 stats in one search; qualifiers and periods are supported. Passing yards search terms include pass yards, pass yds, or passing yds (yards on completed forward passes). Shape a complex query by AND-ing passing yards with another stat in the same period, following the doc pattern: Teams with at least 20 passing attempts and three field goals made in a game—substitute passing yards thresholds and partner stats as needed.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 83.2,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 40.2,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 109.9,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q16",
+    "question": "How to write a rank query",
+    "gold_answer": "A Rank query returns Nth-most or ranked results. You can add a win/loss qualifier.\n\n- Players at the 9th-most rushing yards in 1st quarter",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Rank queries return Nth-most or ranked results. You can use win/loss as a qualifier. Example: Players at the 9th-most rushing yards in 1st quarter. In AQL, rank uses a position and sort order alongside your stat and period.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 63.2,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Rank returns Nth-most or ranked results for a stat. Example: Players at the 9th-most rushing yards in 1st quarter. Any stat in the catalog can be used with Rank (e.g., assists-related rank searches follow the same pattern).",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 59.2,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Use Rank for Nth-most results. Example: Players at the 9th-most rushing yards in 1st quarter. Win/loss can be used as a qualifier with rank-style queries in the query language. Pair Rank with whichever stat you are ordering.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 107.8,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q17",
+    "question": "How to frame a count query",
+    "gold_answer": "A Count query asks how many games or events match a condition. You can add a home/away qualifier.\n\n- In how many games did Bryce Young have greater than 80 rushing yards",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Count asks how many games or events match a condition. Home/away can be used as a qualifier. Example: In how many games did Bryce Young have greater than 80 rushing yards.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 70.2,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Count reports how many games or events match a condition. Example: In how many games did Bryce Young have greater than 80 rushing yards. Use it with any stat in the catalog.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 41.4,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Count tallies how many games or events meet your condition; home/away qualifiers apply. Example: In how many games did Bryce Young have greater than 80 rushing yards.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 106.0,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q18",
+    "question": "How to frame a trend query",
+    "gold_answer": "A Trend query asks whether a metric is rising or changing over a season. You can add a team name qualifier.\n\n- Is Alabama's rushing yards on the rise in a season during the regular season",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Trend asks whether a metric is rising or changing over time; team name can be used as a qualifier. Example: Is Alabama's rushing yards on the rise in a season during the regular season.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 66.4,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Trend checks whether a metric is rising or changing over a season. Example: Is Alabama's rushing yards on the rise in a season during the regular season. Use it with any stat.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 39.3,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Trend queries ask if a stat is rising or changing over a season; team name qualifiers apply. Example: Is Alabama's rushing yards on the rise in a season during the regular season.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 123.2,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q19",
+    "question": "What is the difference between basic and complex stat search?",
+    "gold_answer": "Basic Stat Search uses a single stat with qualifiers and a period (example: Players with rushing yards greater than 10). Complex Stat Search allows 1 to 3 stats combined, still with qualifiers and a period (example: Teams with at least 20 passing attempts and three field goals made in a game). Both support only one period at a time.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Basic stat search uses a single stat to find players or teams that hit a threshold (e.g., Players with 10+ assists or Players with rushing yards greater than 10). Complex search combines 1 to 3 stats with AND or OR for stricter filters (e.g., Juniors with 20+ points and 10+ rebounds against UConn, or Teams with at least 20 passing attempts and three field goals made in a game). Both support qualifiers and periods.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 49.9,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 38.1,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 100.8,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q20",
+    "question": "Do streak queries support qualifiers?",
+    "gold_answer": "No. Qualifiers apply to all query types except Streak queries. Streaks use 1 or 2 stats and game period only.\n\n- Players with 12 receiving yards over 6 consecutive games",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "No. Qualifiers apply to all query types except Streak queries. Streak searches use game period only (for MFB, MBB, and WBB).",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 53.3,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "No. Streaks are consecutive-game patterns for 1–2 stats, game period only, and qualifiers are not supported (shown as ✘ in the Streaks query type). Example streak: Players with 12 receiving yards over 6 consecutive games.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 37.6,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "No. Qualifiers are supported on other query types but not on Streak queries. Streaks allow 1 or 2 stats, game period only, with no qualifiers—e.g., Players with 12 receiving yards over 6 consecutive games.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 98.8,
+        "n_chunks": 8
+      }
+    }
+  }
+]

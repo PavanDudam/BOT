@@ -1,0 +1,151 @@
+id,category,bot,question,pass,overall,correctness,groundedness,completeness,reason,retrieve_latency_ms,n_chunks,pred_grounded,gold_grounded,pred_chars,gold_chars,context_chars,est_pred_tokens,est_context_tokens,est_gold_tokens
+q01,definition,rag,What is rushing yards?,True,5,5,5,5,"Matches gold on net rushing yards, the player and team formulas, and the search aliases.",2282.5,8,True,True,313,318,2974,78,743,79
+q01,definition,okf,What is rushing yards?,True,4,5,5,3,"Gives the player net-yards default and aliases, but omits the team formula.",368.3,8,True,True,305,318,10744,76,2686,79
+q01,definition,mixed,What is rushing yards?,True,5,5,5,5,"Covers the net-yards mapping, both player and team formulas, and the aliases.",78.4,8,True,True,289,318,6661,72,1665,79
+q02,definition,rag,What is passing yards?,True,5,5,5,5,"Matches completed-pass yards for players and teams, plus the search aliases.",51.0,8,True,True,211,243,3371,52,842,60
+q02,definition,okf,What is passing yards?,True,4,5,5,3,"States the player passing-yards definition and aliases, but omits the team definition.",35.2,8,True,True,257,243,10324,64,2581,60
+q02,definition,mixed,What is passing yards?,True,5,5,5,5,Covers total completed-pass yards for players and teams and lists the aliases.,94.0,8,True,True,159,243,6966,39,1741,60
+q03,definition,rag,Define sacks,True,5,5,5,5,"Matches Total Sacks for players and teams and the sacks aliases, with a documented credit split.",51.5,8,True,True,306,266,2442,76,610,66
+q03,definition,okf,Define sacks,True,4,5,5,3,"Gives the player Total Sacks definition and aliases, but not team quarterback sacks.",55.6,8,True,True,249,266,10082,62,2520,66
+q03,definition,mixed,Define sacks,True,5,5,5,5,Covers Total Sacks for players and teams and the sacks and defense sacks aliases.,94.9,8,True,True,191,266,6250,47,1562,66
+q04,definition,rag,What is tackles for loss?,True,5,5,5,5,"Matches total tackles for loss, the tfl alias, and both the player and team definitions.",58.8,8,True,True,205,237,2897,51,724,59
+q04,definition,okf,What is tackles for loss?,True,4,5,5,3,"Defines player TFL including solo and assisted tackles, but omits the team definition.",50.5,8,True,True,233,237,10275,58,2568,59
+q04,definition,mixed,What is tackles for loss?,True,5,5,5,5,Covers total TFL for players and teams and the tfl alias.,131.7,8,True,True,174,237,6655,43,1663,59
+q05,definition,rag,What are interceptions?,True,5,5,5,5,"Matches team and player interceptions and the listed search terms, and correctly separates thrown interceptions.",40.3,8,True,True,294,263,3331,73,832,65
+q05,definition,okf,What are interceptions?,True,5,5,5,5,"States team interceptions, player pass interceptions, and both search aliases.",110.7,8,True,True,228,263,7930,57,1982,65
+q05,definition,mixed,What are interceptions?,True,4,4,5,4,"Covers both interception scopes and the search terms, but the player definition drops the opposing forward pass.",74.2,8,True,True,175,263,6240,43,1560,65
+q06,definition,rag,What is receiving yards?,True,4,5,4,5,"Matches player and team receiving yards and the aliases, but says air yards instead of the documented throw distance.",58.5,8,True,True,218,237,3316,54,829,59
+q06,definition,okf,What is receiving yards?,True,5,5,5,5,"Matches team receiving yards, player throw distance plus yards after the catch, and the aliases.",42.2,8,True,True,218,237,10580,54,2645,59
+q06,definition,mixed,What is receiving yards?,True,4,4,5,4,"Covers team and player receiving yards and aliases, but softens throw distance into yards on the catch.",108.2,8,True,True,198,237,7246,49,1811,59
+q07,definition,rag,What are field goals made?,True,5,5,5,5,Matches football field goals made for players and teams and basketball makes excluding free throws.,58.9,8,True,True,228,205,2530,57,632,51
+q07,definition,okf,What are field goals made?,True,4,4,4,4,"Defines FGM and the basketball exclusion, but limits football to player kicks and calls distance splits filters.",39.1,8,True,True,225,205,11291,56,2822,51
+q07,definition,mixed,What are field goals made?,True,5,5,5,5,Covers football FGM for players and teams and basketball field goals excluding free throws.,112.9,8,True,True,225,205,6446,56,1611,51
+q08,definition,rag,What is net rushing yards?,True,5,5,5,5,"Matches player and team net rushing yards, the default Rushing Yards search, and the aliases.",61.4,8,True,True,270,295,3332,67,833,73
+q08,definition,okf,What is net rushing yards?,True,4,5,5,4,"Defines net rushing yards, the default search, and aliases, without the separate team formula.",38.8,8,True,True,212,295,9868,53,2467,73
+q08,definition,mixed,What is net rushing yards?,True,4,5,5,4,"Gives player and team net rushing yards and the default search, but omits the rush-yards aliases.",136.0,8,True,True,178,295,7080,44,1770,73
+q09,definition,rag,What is completion percentage?,True,5,5,5,5,Identifies pass completion percentage for players and teams and the pass comp percent alias.,40.3,8,True,True,136,174,2945,34,736,43
+q09,definition,okf,What is completion percentage?,True,4,5,5,4,"Correctly defines player pass completion percentage and the alias, but omits teams.",46.8,8,True,True,107,174,10061,26,2515,43
+q09,definition,mixed,What is completion percentage?,True,5,5,5,5,States pass completion percentage for players or teams and the alias.,93.9,8,True,True,135,174,6653,33,1663,43
+q10,definition,rag,What are points off turnovers?,True,5,5,5,5,Matches MFB points after a forced turnover and the MBB points-from-turnovers stat.,55.0,8,True,True,187,199,2905,46,726,49
+q10,definition,okf,What are points off turnovers?,True,5,5,5,5,Covers the MFB team stat and MBB points scored off opponent turnovers.,46.9,8,True,True,205,199,7358,51,1839,49
+q10,definition,mixed,What are points off turnovers?,True,5,5,5,5,States MFB points after a forced turnover and MBB points off opponent turnovers.,115.3,8,True,True,150,199,5972,37,1493,49
+q11,query_framing,rag,How to frame query using rushing yards,False,2,2,5,2,"Frames rushing yards as Rushing Yards Gained instead of the net-rushing-yards default, terms, and examples.",76.3,8,True,True,547,402,3803,136,950,100
+q11,query_framing,okf,How to frame query using rushing yards,True,5,5,5,5,"Matches the net default, search terms, and the basic, record, last-time, and streak examples.",57.0,8,True,True,505,402,10744,126,2686,100
+q11,query_framing,mixed,How to frame query using rushing yards,True,5,5,5,5,"Matches net rushing yards, terms, and examples, and correctly separates yards gained.",118.9,8,True,True,498,402,7530,124,1882,100
+q12,query_framing,rag,How to write a streak query,True,4,5,5,4,"States the streak rules and one gold example, substituting other doc examples for assists and rushing yards.",82.9,8,True,True,406,322,6332,101,1583,80
+q12,query_framing,okf,How to write a streak query,False,1,1,3,1,Wrongly refuses a streak question the docs answer.,41.0,8,False,True,62,322,8082,15,2020,80
+q12,query_framing,mixed,How to write a streak query,True,4,5,5,4,Covers streak limits and two examples but omits the consecutive rushing-yards example.,198.6,8,True,True,326,322,5807,81,1451,80
+q13,query_framing,rag,How to frame a last time query,True,4,5,5,4,"Covers last-time rules and periods, but uses a turnovers example instead of rebounds and assists.",83.1,8,True,True,374,383,4541,93,1135,95
+q13,query_framing,okf,How to frame a last time query,False,3,4,5,3,Gives the last-time definition and two examples but omits the sport-specific period lists.,52.5,8,True,True,270,383,7798,67,1949,95
+q13,query_framing,mixed,How to frame a last time query,True,4,5,5,4,"Includes periods and the touchdowns example, but not the rebounds or assists examples.",129.4,8,True,True,379,383,5362,94,1340,95
+q14,query_framing,rag,Example queries for records,True,5,5,5,5,"Includes the record rules, supported periods, and all three gold examples.",67.2,8,True,True,399,328,3914,99,978,82
+q14,query_framing,okf,Example queries for records,False,3,4,5,3,Gives other single-stat record examples and misses the gold examples and period rules.,67.3,8,True,True,267,328,10088,66,2522,82
+q14,query_framing,mixed,Example queries for records,True,4,5,5,4,"Covers record rules and some examples, but not highest points or the assists record question.",224.3,8,True,True,425,328,7173,106,1793,82
+q15,query_framing,rag,How to frame a complex query using passing yards,True,5,5,5,5,"Explains 1–3 stat complex search with qualifiers, one period, and the passing-attempts example.",83.2,8,True,True,465,401,4874,116,1218,100
+q15,query_framing,okf,How to frame a complex query using passing yards,False,1,1,3,1,Wrongly refuses a complex passing-yards question the docs answer.,40.2,8,False,True,62,401,9917,15,2479,100
+q15,query_framing,mixed,How to frame a complex query using passing yards,False,1,1,3,1,Wrongly refuses a complex passing-yards question the docs answer.,109.9,8,False,True,62,401,7284,15,1821,100
+q16,query_framing,rag,How to write a rank query,True,5,5,5,5,"Matches Nth-most rank, the win/loss qualifier, and the 9th-most rushing-yards example.",63.2,8,True,True,223,138,4399,55,1099,34
+q16,query_framing,okf,How to write a rank query,True,4,4,4,4,Matches the rank definition and example but omits win/loss and loosely cites assists.,59.2,8,True,True,223,138,7854,55,1963,34
+q16,query_framing,mixed,How to write a rank query,True,5,5,5,5,"Matches Nth-most rank, the win/loss qualifier, and the rushing-yards example.",107.8,8,True,True,224,138,6204,56,1551,34
+q17,query_framing,rag,How to frame a count query,True,5,5,5,5,"Matches count, the home/away qualifier, and the Bryce Young example.",70.2,8,True,True,171,169,2812,42,703,42
+q17,query_framing,okf,How to frame a count query,True,4,4,5,4,Matches the count definition and Bryce Young example but omits the home/away qualifier.,41.4,8,True,True,173,169,7905,43,1976,42
+q17,query_framing,mixed,How to frame a count query,True,5,5,5,5,"Matches count, the home/away qualifier, and the Bryce Young example.",106.0,8,True,True,166,169,5150,41,1287,42
+q18,query_framing,rag,How to frame a trend query,True,5,5,5,5,"Matches trend, the team-name qualifier, and the Alabama rushing-yards example.",66.4,8,True,True,185,187,3580,46,895,46
+q18,query_framing,okf,How to frame a trend query,True,4,4,5,4,Matches the trend definition and Alabama example but omits the team-name qualifier.,39.3,8,True,True,175,187,7934,43,1983,46
+q18,query_framing,mixed,How to frame a trend query,True,5,5,5,5,"Matches trend, the team-name qualifier, and the Alabama example.",123.2,8,True,True,179,187,6010,44,1502,46
+q19,query_framing,rag,What is the difference between basic and complex stat search?,True,4,5,5,4,"Contrasts single-stat basic search with 1–3 stat complex search, but omits the one-period limit.",49.9,8,True,True,417,334,4661,104,1165,83
+q19,query_framing,okf,What is the difference between basic and complex stat search?,False,1,1,3,1,Wrongly refuses a basic-versus-complex question the docs answer.,38.1,8,False,True,62,334,9327,15,2331,83
+q19,query_framing,mixed,What is the difference between basic and complex stat search?,False,1,1,3,1,Wrongly refuses a basic-versus-complex question the docs answer.,100.8,8,False,True,62,334,6137,15,1534,83
+q20,query_framing,rag,Do streak queries support qualifiers?,True,5,5,5,4,Correctly says streaks do not support qualifiers and notes game-only periods.,53.3,8,True,True,124,169,2791,31,697,42
+q20,query_framing,okf,Do streak queries support qualifiers?,True,5,5,5,5,"Correctly says no, with the 1–2 stat limit, game period, and receiving-yards example.",37.6,8,True,True,221,169,4769,55,1192,42
+q20,query_framing,mixed,Do streak queries support qualifiers?,True,5,5,5,5,Correctly says no and restates the streak limits and receiving-yards example.,98.8,8,True,True,205,169,3787,51,946,42
+q21,platform,rag,What sports does Athlyte Search support?,True,5,5,5,5,Lists all nine supported sports and notes that more sports are planned.,135.5,8,True,True,262,291,3278,65,819,72
+q21,platform,okf,What sports does Athlyte Search support?,True,5,5,5,5,Lists all nine supported sports and notes that more sports are planned.,46.0,8,True,True,262,291,35280,65,8820,72
+q21,platform,mixed,What sports does Athlyte Search support?,True,5,5,5,5,Lists all nine supported sports and notes that more sports are planned.,142.4,8,True,True,262,291,34341,65,8585,72
+q22,platform,rag,What is the Data Centre in Athlyte Search?,True,5,5,5,5,"Covers the Data Centre mappings, categories, availability ranges, and Standard and Advanced history.",56.8,8,True,True,226,250,2158,56,539,62
+q22,platform,okf,What is the Data Centre in Athlyte Search?,False,1,1,5,1,Wrongly refuses the Data Centre definition that the gold answer provides.,42.9,8,False,True,62,250,9941,15,2485,62
+q22,platform,mixed,What is the Data Centre in Athlyte Search?,True,5,5,5,5,"Covers the Data Centre mappings, categories, availability ranges, and Standard and Advanced history.",109.5,8,True,True,226,250,6284,56,1571,62
+q23,platform,rag,What is the standard data range for Men's Football?,True,4,5,5,4,States the 2014–present standard range but omits the gold's 2021 advanced-metrics range.,61.9,8,True,True,71,124,2617,17,654,31
+q23,platform,okf,What is the standard data range for Men's Football?,False,1,1,5,1,Wrongly refuses the Men's Football standard data range given in the gold answer.,38.2,8,False,True,62,124,8901,15,2225,31
+q23,platform,mixed,What is the standard data range for Men's Football?,False,1,1,5,1,Wrongly refuses the Men's Football standard data range given in the gold answer.,117.2,8,False,True,62,124,6832,15,1708,31
+q24,platform,rag,When did advanced metrics start for Men's Football?,True,5,5,5,5,States the 2021 start and that some metrics were tracked in more detail from that season.,50.6,8,True,True,167,170,2763,41,690,42
+q24,platform,okf,When did advanced metrics start for Men's Football?,False,1,1,5,1,Wrongly refuses when advanced Men's Football metrics began.,49.1,8,False,True,62,170,36925,15,9231,42
+q24,platform,mixed,When did advanced metrics start for Men's Football?,True,5,5,5,5,States the 2021 start and that some metrics were tracked in more detail from that season.,122.0,8,True,True,167,170,34166,41,8541,42
+q25,platform,rag,What offense sub-categories exist for MFB players?,True,5,5,5,5,Lists all eight MFB Offense sub-categories from the gold answer.,53.6,8,True,True,112,147,2116,28,529,36
+q25,platform,okf,What offense sub-categories exist for MFB players?,False,1,1,5,1,Wrongly refuses the MFB Offense sub-categories given in the gold answer.,49.6,8,False,True,62,147,8351,15,2087,36
+q25,platform,mixed,What offense sub-categories exist for MFB players?,True,5,5,5,5,Lists all eight MFB Offense sub-categories from the gold answer.,117.2,8,True,True,112,147,5196,28,1299,36
+q26,navigation,rag,How do I open the Team Dashboard?,True,5,5,5,5,Matches the gold step of clicking the team name in the search results table.,36.1,8,True,True,86,86,3512,21,878,21
+q26,navigation,okf,How do I open the Team Dashboard?,True,5,5,5,5,"Same results-table path, adding the documented TEAM-column hyperlink without contradicting gold.",55.0,8,True,True,126,86,5014,31,1253,21
+q26,navigation,mixed,How do I open the Team Dashboard?,True,5,5,5,5,Matches the gold step of clicking the team name in the search results table.,103.3,8,True,True,86,86,3735,21,933,21
+q27,navigation,rag,What sections are on the player dashboard?,True,4,5,5,4,Names all five Player Dashboard sections but omits what each section shows.,46.3,8,True,True,124,370,5753,31,1438,92
+q27,navigation,okf,What sections are on the player dashboard?,True,4,5,5,4,Names all five Player Dashboard sections but omits what each section shows.,57.1,8,True,True,124,370,5990,31,1497,92
+q27,navigation,mixed,What sections are on the player dashboard?,True,4,5,5,4,Names all five Player Dashboard sections but omits what each section shows.,106.0,8,True,True,124,370,6756,31,1689,92
+q28,navigation,rag,What tabs are available on the Team Dashboard?,True,5,5,5,5,Lists all five Team Dashboard tabs and that clicking a tab switches panels.,41.5,8,True,True,144,151,2871,36,717,37
+q28,navigation,okf,What tabs are available on the Team Dashboard?,True,5,5,5,5,Lists all five Team Dashboard tabs and that clicking a tab switches panels.,64.6,8,True,True,144,151,5729,36,1432,37
+q28,navigation,mixed,What tabs are available on the Team Dashboard?,True,5,5,5,5,Lists all five Team Dashboard tabs and that clicking a tab switches panels.,119.1,8,True,True,144,151,3785,36,946,37
+q29,navigation,rag,How do filters work on search results?,False,3,4,5,3,"Gets the no-requery behavior and Streaks exception, but lists only Name, Date, Period Type, and Results.",45.3,8,True,True,234,350,2142,58,535,87
+q29,navigation,okf,How do filters work on search results?,True,5,5,5,5,"Matches the sidebar filters, the Streaks exception, and each filter type in the gold answer.",53.5,8,True,True,327,350,6955,81,1738,87
+q29,navigation,mixed,How do filters work on search results?,True,4,5,5,4,"Covers every filter category and the Streaks exception, but drops the gold examples for result, game type, and period.",109.4,8,True,True,252,350,5049,63,1262,87
+q30,navigation,rag,What is Ask Athlyte?,True,5,5,5,5,"Describes Ask Athlyte as the in-platform assistant for stats, query framing, and product help.",64.3,8,True,True,192,204,2520,48,630,51
+q30,navigation,okf,What is Ask Athlyte?,False,1,1,5,1,Wrongly refuses the Ask Athlyte definition given in the gold answer.,40.0,8,False,True,62,204,9253,15,2313,51
+q30,navigation,mixed,What is Ask Athlyte?,False,1,1,5,1,Wrongly refuses the Ask Athlyte definition given in the gold answer.,114.5,8,False,True,62,204,6378,15,1594,51
+q31,features,rag,What does the Game Dashboard include?,True,4,5,5,4,"Covers Player Stats, Team Stats, Rosters, and Play-by-Play, but omits how to open the dashboard.",60.8,8,True,True,304,473,3618,76,904,118
+q31,features,okf,What does the Game Dashboard include?,True,4,5,5,4,"Matches player, team, roster, and navigation detail, but never mentions Play-by-Play.",44.8,8,True,True,448,473,4222,112,1055,118
+q31,features,mixed,What does the Game Dashboard include?,True,5,5,5,5,"Covers the four sections, both-team breakdowns, the roster toggle, and how to open it.",139.4,8,True,True,369,473,3018,92,754,118
+q32,features,rag,What is Typeahead in Athlyte Search?,True,5,5,5,5,Matches the gold definition of real-time autocomplete and the suggestion dropdown.,38.1,8,True,True,182,179,3260,45,815,44
+q32,features,okf,What is Typeahead in Athlyte Search?,False,1,1,5,1,Refuses even though the docs define Typeahead as search autocomplete.,61.6,8,False,True,62,179,9812,15,2453,44
+q32,features,mixed,What is Typeahead in Athlyte Search?,True,5,5,5,5,Matches the gold definition of real-time autocomplete and the suggestion dropdown.,117.7,8,True,True,182,179,6630,45,1657,44
+q33,features,rag,What can Visualize Data do?,True,5,5,5,5,"Covers availability, supported query types, and the bar, scatter, and line chart rules.",37.7,8,True,True,844,819,5168,211,1292,204
+q33,features,okf,What can Visualize Data do?,False,1,1,5,1,Refuses even though the docs explain Visualize Data and its chart types.,64.7,8,False,True,62,819,6711,15,1677,204
+q33,features,mixed,What can Visualize Data do?,False,3,5,5,3,"Names the feature and query types, but omits each query type's chart rules.",105.5,8,True,True,480,819,6109,120,1527,204
+q34,features,rag,What is shown in Team Streaks?,False,1,1,5,1,Refuses even though Team Streaks is consecutive-game team performance on the Team Dashboard.,48.9,8,False,True,62,199,4013,15,1003,49
+q34,features,okf,What is shown in Team Streaks?,False,1,1,5,1,Refuses even though Team Streaks is consecutive-game team performance on the Team Dashboard.,48.6,8,False,True,62,199,9535,15,2383,49
+q34,features,mixed,What is shown in Team Streaks?,False,1,1,5,1,Refuses even though Team Streaks is consecutive-game team performance on the Team Dashboard.,107.5,8,False,True,62,199,7327,15,1831,49
+q35,features,rag,What are Season Highs on the Team Dashboard?,True,5,5,5,5,"Matches the season-high definition, filters, columns, and clear and sort controls.",45.6,8,True,True,349,371,4752,87,1188,92
+q35,features,okf,What are Season Highs on the Team Dashboard?,True,5,5,5,5,"Matches the season-high definition, filters, columns, and clear and sort controls.",46.3,8,True,True,367,371,6257,91,1564,92
+q35,features,mixed,What are Season Highs on the Team Dashboard?,True,4,5,5,4,"Covers the definition, filters, and columns, but omits clear and sort.",105.8,8,True,True,275,371,5495,68,1373,92
+q36,export,rag,How do I export report records?,True,4,5,5,4,"Gives the export steps and filtered .xlsx rows, but omits the offline-analysis purpose.",41.8,8,True,True,293,346,3439,73,859,86
+q36,export,okf,How do I export report records?,True,4,5,5,4,"Gives the export steps and Excel download, but omits applied filters and the offline purpose.",46.9,8,True,True,309,346,4210,77,1052,86
+q36,export,mixed,How do I export report records?,True,5,5,5,5,"Covers local export, the Export control, and a filtered .xlsx of the table rows.",101.7,8,True,True,235,346,3078,58,769,86
+q37,export,rag,How are records grouped in export reports?,True,5,5,5,5,"Matches grouping by metric and the Entity Name, Value, and Period columns.",53.3,8,True,True,245,238,3244,61,811,59
+q37,export,okf,How are records grouped in export reports?,True,5,5,5,5,"Matches grouping by metric and the Entity Name, Value, and Period columns.",48.0,8,True,True,250,238,34899,62,8724,59
+q37,export,mixed,How are records grouped in export reports?,True,5,5,5,5,"Matches grouping by metric and the Entity Name, Value, and Period columns.",112.5,8,True,True,243,238,34568,60,8642,59
+q38,search,rag,What filters can I apply to search results?,False,3,4,3,3,"Lists some sidebar filters and the streaks exception, but mis-scopes Position and Classes to season queries and omits several filters.",48.8,8,True,True,326,523,2150,81,537,130
+q38,search,okf,What filters can I apply to search results?,True,5,5,5,5,"Matches the sidebar filter list, streaks exception, in-text qualifiers, and hidden Position filter.",49.4,8,True,True,528,523,36768,132,9192,130
+q38,search,mixed,What filters can I apply to search results?,True,4,5,5,4,"Covers the filter families, streaks exception, in-text narrowing, and hidden Position filter, with less detail on option values.",107.5,8,True,True,411,523,34266,102,8566,130
+q39,search,rag,What periods are supported for basic queries in Men's Football?,True,5,5,5,5,"Matches Quarter, Half, Game, Season, and Career, including the player-only Career limit.",55.7,8,True,True,204,214,2891,51,722,53
+q39,search,okf,What periods are supported for basic queries in Men's Football?,False,1,1,5,1,Refuses even though Men's Football basic-query periods are listed in the docs.,51.8,8,False,True,62,214,36130,15,9032,53
+q39,search,mixed,What periods are supported for basic queries in Men's Football?,True,5,5,5,5,"Matches Quarter, Half, Game, Season, and Career, including the player-only Career limit.",112.8,8,True,True,209,214,34553,52,8638,53
+q40,search,rag,What is Athlyte Query Language (AQL)?,True,5,5,5,5,"Matches the AQL definition, standard fields, and the punt-return season example.",64.9,8,True,True,459,483,3777,114,944,120
+q40,search,okf,What is Athlyte Query Language (AQL)?,False,1,1,5,1,Refuses even though the docs define Athlyte Query Language and its fields.,40.5,8,False,True,62,483,9253,15,2313,120
+q40,search,mixed,What is Athlyte Query Language (AQL)?,True,5,5,5,5,"Matches the AQL fields and punt-return mapping, with a slightly shorter definition.",106.4,8,True,True,364,483,8144,91,2036,120
+q41,search,rag,Give example search queries for rushing yards,True,5,5,4,5,"Matches the net rushing yards default and all seven gold examples, with a brief extra note on gained and lost yards.",49.5,8,True,True,481,428,4361,120,1090,107
+q41,search,okf,Give example search queries for rushing yards,True,5,5,4,5,"Includes every gold example and the net-yards default, plus a Bryce Young count query that gold does not list.",44.9,8,True,True,557,428,7191,139,1797,107
+q41,search,mixed,Give example search queries for rushing yards,True,4,5,4,4,"States the net-yards default and most examples, but drops the 9th-most rank query and adds gained and lost examples.",106.9,8,True,True,437,428,7168,109,1792,107
+q42,search,rag,What search terms can I use for sacks?,True,4,5,4,5,Covers all four sack term groups and adds sack-yards-lost aliases that gold does not include.,46.8,8,True,True,269,183,4729,67,1182,45
+q42,search,okf,What search terms can I use for sacks?,True,5,5,5,5,"Matches gold on total, unassisted, assisted, and passing sack search terms.",51.6,8,True,True,133,183,8907,33,2226,45
+q42,search,mixed,What search terms can I use for sacks?,True,5,5,5,5,"Matches gold on total, unassisted, assisted, and passing sack search terms.",99.3,8,True,True,133,183,7112,33,1778,45
+q43,search,rag,Can I request multiple time periods in one query?,True,5,5,5,5,Correctly says each query supports only one specified time period.,52.4,8,True,True,124,143,3069,31,767,35
+q43,search,okf,Can I request multiple time periods in one query?,False,1,1,5,1,Wrongly refuses a documented limit of one time period per query.,49.5,8,False,True,62,143,36575,15,9143,35
+q43,search,mixed,Can I request multiple time periods in one query?,True,5,5,5,5,Correctly says each query supports only one specified time period.,101.0,8,True,True,142,143,34436,35,8609,35
+q44,search,rag,What appears on the result screen after a search?,True,4,5,5,4,"Covers the results table, metadata including conference, filters, export, and Visualize Data, but omits team-level aggregation.",52.7,8,True,True,329,454,2713,82,678,113
+q44,search,okf,What appears on the result screen after a search?,True,4,5,5,4,"Describes the table, filters, export, and team aggregation, but omits conference affiliation and the Visualize Data panel.",43.7,8,True,True,329,454,4656,82,1164,113
+q44,search,mixed,What appears on the result screen after a search?,True,5,5,5,4,"Covers filters, export, the visualize panel, and team aggregation, omitting only conference affiliation.",97.8,8,True,True,340,454,3640,85,910,113
+q45,basketball,rag,What defensive statistics are available for MBB players?,False,3,3,3,2,"Names defensive rebound percentage among other defense stats but omits the definition, search terms, and example.",54.2,8,True,True,238,267,1395,59,348,66
+q45,basketball,okf,What defensive statistics are available for MBB players?,True,4,4,4,4,"Gives the percentage search terms and example, skips the definition, and adds defensive-rebounds aliases.",37.1,8,True,True,259,267,8631,64,2157,66
+q45,basketball,mixed,What defensive statistics are available for MBB players?,True,4,5,5,4,"Defines defensive rebound percentage and gives both search terms, but omits the example query.",106.6,8,True,True,289,267,4718,72,1179,66
+q46,basketball,rag,What is the standard data range for Men's Basketball?,True,4,5,4,5,"States 2009 to present and advanced metrics from 2011, and names two metrics gold does not list.",55.7,8,True,True,234,125,2584,58,646,31
+q46,basketball,okf,What is the standard data range for Men's Basketball?,False,1,1,5,1,Wrongly refuses the documented men's basketball ranges of 2009 to present and 2011 to present.,39.8,8,False,True,62,125,8901,15,2225,31
+q46,basketball,mixed,What is the standard data range for Men's Basketball?,True,5,5,5,5,Matches both the 2009-to-present standard range and advanced metrics from 2011.,103.8,8,True,True,144,125,5332,36,1333,31
+q47,platform,rag,How does the payment upgrade flow start?,True,5,5,5,5,"Matches the Upgrade button, Profile path, and Select Sport, add-ons, and checkout steps.",56.2,8,True,True,243,278,3427,60,856,69
+q47,platform,okf,How does the payment upgrade flow start?,False,2,2,3,2,"Describes Dashboard Change Plan instead of the Upgrade button, Profile path, and named wizard steps.",62.8,8,True,True,242,278,36153,60,9038,69
+q47,platform,mixed,How does the payment upgrade flow start?,True,4,5,4,5,"Covers the Upgrade button, Profile path, and wizard steps, and also adds Dashboard Change Plan.",119.0,8,True,True,263,278,33904,65,8476,69
+q48,edge,rag,What is the weather in New York today?,True,5,5,5,5,"Correctly refuses an out-of-scope weather question, matching the gold refusal.",40.1,8,False,False,62,62,1376,15,344,15
+q48,edge,okf,What is the weather in New York today?,True,5,5,5,5,"Correctly refuses an out-of-scope weather question, matching the gold refusal.",72.6,8,False,False,62,62,10083,15,2520,15
+q48,edge,mixed,What is the weather in New York today?,True,5,5,5,5,"Correctly refuses an out-of-scope weather question, matching the gold refusal.",99.0,8,False,False,62,62,5970,15,1492,15
+q49,edge,rag,Who won the Super Bowl in 2020?,True,5,5,5,5,"Correctly refuses an out-of-scope Super Bowl question, matching the gold refusal.",66.8,8,False,False,62,62,2030,15,507,15
+q49,edge,okf,Who won the Super Bowl in 2020?,True,5,5,5,5,"Correctly refuses an out-of-scope Super Bowl question, matching the gold refusal.",45.9,8,False,False,62,62,6421,15,1605,15
+q49,edge,mixed,Who won the Super Bowl in 2020?,True,5,5,5,5,"Correctly refuses an out-of-scope Super Bowl question, matching the gold refusal.",113.8,8,False,False,62,62,5226,15,1306,15
+q50,edge,rag,Does Athlyte Search support baseball?,True,5,5,5,5,"Correctly says baseball is unsupported and lists the same nine sports, with more planned later.",60.0,8,True,True,300,341,3426,75,856,85
+q50,edge,okf,Does Athlyte Search support baseball?,True,5,5,5,5,"Correctly says baseball is unsupported and lists the same nine sports, noting others may be added later.",43.0,8,True,True,263,341,34772,65,8693,85
+q50,edge,mixed,Does Athlyte Search support baseball?,True,5,5,5,5,"Correctly says baseball is unsupported and lists the same nine sports, with more sports in future updates.",104.8,8,True,True,293,341,34674,73,8668,85

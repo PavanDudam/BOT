@@ -182,6 +182,7 @@ def answer_question(question: str, bot: BotName = "rag") -> ChatResponse:
             citations=[],
             grounded=False,
             bot=bot,
+            latency_ms=round(total_ms, 1),
         )
 
     settings = get_settings()
@@ -233,6 +234,10 @@ def answer_question(question: str, bot: BotName = "rag") -> ChatResponse:
             citations=citations,
             grounded=False,
             bot=bot,
+            latency_ms=round(total_ms, 1),
+            prompt_tokens=usage.get("prompt_tokens"),
+            output_tokens=usage.get("output_tokens"),
+            total_tokens=usage.get("total_tokens"),
         )
 
     logger.info(
@@ -249,6 +254,10 @@ def answer_question(question: str, bot: BotName = "rag") -> ChatResponse:
         citations=citations,
         grounded=True,
         bot=bot,
+        latency_ms=round(total_ms, 1),
+        prompt_tokens=usage.get("prompt_tokens"),
+        output_tokens=usage.get("output_tokens"),
+        total_tokens=usage.get("total_tokens"),
     )
 
 
