@@ -19,7 +19,9 @@ class Settings(BaseSettings):
     gemini_temperature: float = 0.0
     embedding_model: str = "BAAI/bge-base-en-v1.5"
     # Default: Docker Qdrant. Set empty to fall back to local embedded store at qdrant_path.
+    # For Qdrant Cloud, set QDRANT_URL to the cluster HTTPS endpoint and QDRANT_API_KEY.
     qdrant_url: str = "http://localhost:6333"
+    qdrant_api_key: str = ""
     qdrant_path: Path = RAG_BOT_ROOT / "data" / "qdrant"
     qdrant_collection: str = "athlyte_docs"
     docs_path: Path = REPO_ROOT / "docs"

@@ -16,7 +16,15 @@ from app.rag.embeddings import embed_texts
 def get_qdrant() -> QdrantClient:
     settings = get_settings()
     if settings.qdrant_url:
-        return QdrantClient(url=settings.qdrant_url, check_compatibility=False)
+        kwargs: dict = {
+            "url": settings.qdrant_url.rstrip("/"),
+            "check_compatibility": False,
+            # Cloud upserts of dense vectors need a generous write timeout.
+            "timeout": 120,
+        }
+        if settings.qdrant_api_key:
+            kwargs["api_key"] = settings.qdrant_api_key
+        return QdrantClient(**kwargs)
     settings.qdrant_path.mkdir(parents=True, exist_ok=True)
     return QdrantClient(path=str(settings.qdrant_path), check_compatibility=False)
 
@@ -45,13 +53,19 @@ def _payload(chunk: Chunk) -> dict:
     }
 
 
-def ingest_docs(docs_path: Path | None = None, batch_size: int = 64) -> int:
+def ingest_docs(docs_path: Path | None = None, batch_size: int | None = None) -> int:
     settings = get_settings()
     docs_path = docs_path or settings.docs_path
     chunks = chunk_docs_dir(docs_path)
     if not chunks:
         raise RuntimeError(f"No markdown chunks found under {docs_path}")
 
+    # Smaller batches for Qdrant Cloud (avoids write timeouts on free tier).
+    if batch_size is None:
+        batch_size = 16 if settings.qdrant_api_key else 64
+
+    # Force a fresh client so timeout/api_key changes apply after config edits.
+    get_qdrant.cache_clear()
     client = get_qdrant()
     ensure_collection(client, settings)
 
@@ -67,6 +81,16 @@ def ingest_docs(docs_path: Path | None = None, batch_size: int = 64) -> int:
             )
             for chunk, vector in zip(batch, vectors)
         ]
-        client.upsert(collection_name=settings.qdrant_collection, points=points)
+        for attempt in range(3):
+            try:
+                client.upsert(collection_name=settings.qdrant_collection, points=points)
+                break
+            except Exception:
+                if attempt == 2:
+                    raise
+                import time
+
+                time.sleep(2 * (attempt + 1))
         total += len(points)
+        print(f"Upserted {total}/{len(chunks)}", flush=True)
     return total
