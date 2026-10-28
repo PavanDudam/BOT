@@ -17,7 +17,8 @@ class Settings(BaseSettings):
     google_api_key: str = ""
     gemini_model: str = "gemini-3.5-flash-lite"
     gemini_temperature: float = 0.0
-    embedding_model: str = "BAAI/bge-base-en-v1.5"
+    # bge-small fits Render free (512MB); base often OOMs there.
+    embedding_model: str = "BAAI/bge-small-en-v1.5"
     # Default: Docker Qdrant. Set empty to fall back to local embedded store at qdrant_path.
     # For Qdrant Cloud, set QDRANT_URL to the cluster HTTPS endpoint and QDRANT_API_KEY.
     qdrant_url: str = "http://localhost:6333"
@@ -28,7 +29,7 @@ class Settings(BaseSettings):
     okf_bundle_path: Path = REPO_ROOT / "okf_bundle"
     top_k: int = 8
     score_threshold: float = 0.35
-    embedding_dim: int = 768
+    embedding_dim: int = 384
     okf_expand_hops: int = 1
     rrf_k: int = 60
 
