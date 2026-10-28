@@ -17,3 +17,5 @@ frontend/dist/
 *.bin
 .DS_Store
 
+
+frontend/.vite/
