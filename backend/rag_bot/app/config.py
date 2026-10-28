@@ -23,9 +23,12 @@ class Settings(BaseSettings):
     qdrant_path: Path = RAG_BOT_ROOT / "data" / "qdrant"
     qdrant_collection: str = "athlyte_docs"
     docs_path: Path = REPO_ROOT / "docs"
+    okf_bundle_path: Path = REPO_ROOT / "okf_bundle"
     top_k: int = 8
     score_threshold: float = 0.35
     embedding_dim: int = 768
+    okf_expand_hops: int = 1
+    rrf_k: int = 60
 
 
 @lru_cache
@@ -35,4 +38,6 @@ def get_settings() -> Settings:
         settings.docs_path = (RAG_BOT_ROOT / settings.docs_path).resolve()
     if not settings.qdrant_path.is_absolute():
         settings.qdrant_path = (RAG_BOT_ROOT / settings.qdrant_path).resolve()
+    if not settings.okf_bundle_path.is_absolute():
+        settings.okf_bundle_path = (RAG_BOT_ROOT / settings.okf_bundle_path).resolve()
     return settings
