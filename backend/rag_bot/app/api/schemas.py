@@ -23,6 +23,10 @@ class ChatResponse(BaseModel):
     citations: list[Citation]
     grounded: bool
     bot: BotName = "rag"
+    latency_ms: float | None = None
+    prompt_tokens: int | None = None
+    output_tokens: int | None = None
+    total_tokens: int | None = None
 
 
 class HealthResponse(BaseModel):

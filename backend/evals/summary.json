@@ -1,0 +1,184 @@
+{
+  "summary": {
+    "rag": {
+      "n": 50,
+      "pass_rate": 0.9,
+      "avg_overall": 4.52,
+      "avg_correctness": 4.78,
+      "avg_groundedness": 4.84,
+      "avg_completeness": 4.54,
+      "avg_retrieve_ms": 101.516,
+      "p50_retrieve_ms": 54.6,
+      "avg_context_tokens_est": 834.16,
+      "avg_answer_tokens_est": 64.16,
+      "total_context_tokens_est": 41708,
+      "total_answer_tokens_est": 3208,
+      "wrong_refuse": 1
+    },
+    "okf": {
+      "n": 50,
+      "pass_rate": 0.64,
+      "avg_overall": 3.36,
+      "avg_correctness": 3.6,
+      "avg_groundedness": 4.76,
+      "avg_completeness": 3.28,
+      "avg_retrieve_ms": 55.944,
+      "p50_retrieve_ms": 46.9,
+      "avg_context_tokens_est": 3176.4,
+      "avg_answer_tokens_est": 48.56,
+      "total_context_tokens_est": 158820,
+      "total_answer_tokens_est": 2428,
+      "wrong_refuse": 15
+    },
+    "mixed": {
+      "n": 50,
+      "pass_rate": 0.88,
+      "avg_overall": 4.3,
+      "avg_correctness": 4.56,
+      "avg_groundedness": 4.88,
+      "avg_completeness": 4.3,
+      "avg_retrieve_ms": 113.732,
+      "p50_retrieve_ms": 108.0,
+      "avg_context_tokens_est": 2622.2,
+      "avg_answer_tokens_est": 54.04,
+      "total_context_tokens_est": 131110,
+      "total_answer_tokens_est": 2702,
+      "wrong_refuse": 5
+    }
+  },
+  "category": {
+    "definition": {
+      "rag": {
+        "pass_rate": 1.0,
+        "n": 10
+      },
+      "okf": {
+        "pass_rate": 1.0,
+        "n": 10
+      },
+      "mixed": {
+        "pass_rate": 1.0,
+        "n": 10
+      }
+    },
+    "query_framing": {
+      "rag": {
+        "pass_rate": 0.9,
+        "n": 10
+      },
+      "okf": {
+        "pass_rate": 0.5,
+        "n": 10
+      },
+      "mixed": {
+        "pass_rate": 0.8,
+        "n": 10
+      }
+    },
+    "platform": {
+      "rag": {
+        "pass_rate": 1.0,
+        "n": 6
+      },
+      "okf": {
+        "pass_rate": 0.16666666666666666,
+        "n": 6
+      },
+      "mixed": {
+        "pass_rate": 0.8333333333333334,
+        "n": 6
+      }
+    },
+    "navigation": {
+      "rag": {
+        "pass_rate": 0.8,
+        "n": 5
+      },
+      "okf": {
+        "pass_rate": 0.8,
+        "n": 5
+      },
+      "mixed": {
+        "pass_rate": 0.8,
+        "n": 5
+      }
+    },
+    "features": {
+      "rag": {
+        "pass_rate": 0.8,
+        "n": 5
+      },
+      "okf": {
+        "pass_rate": 0.4,
+        "n": 5
+      },
+      "mixed": {
+        "pass_rate": 0.6,
+        "n": 5
+      }
+    },
+    "export": {
+      "rag": {
+        "pass_rate": 1.0,
+        "n": 2
+      },
+      "okf": {
+        "pass_rate": 1.0,
+        "n": 2
+      },
+      "mixed": {
+        "pass_rate": 1.0,
+        "n": 2
+      }
+    },
+    "search": {
+      "rag": {
+        "pass_rate": 0.8571428571428571,
+        "n": 7
+      },
+      "okf": {
+        "pass_rate": 0.5714285714285714,
+        "n": 7
+      },
+      "mixed": {
+        "pass_rate": 1.0,
+        "n": 7
+      }
+    },
+    "basketball": {
+      "rag": {
+        "pass_rate": 0.5,
+        "n": 2
+      },
+      "okf": {
+        "pass_rate": 0.5,
+        "n": 2
+      },
+      "mixed": {
+        "pass_rate": 1.0,
+        "n": 2
+      }
+    },
+    "edge": {
+      "rag": {
+        "pass_rate": 1.0,
+        "n": 3
+      },
+      "okf": {
+        "pass_rate": 1.0,
+        "n": 3
+      },
+      "mixed": {
+        "pass_rate": 1.0,
+        "n": 3
+      }
+    }
+  },
+  "wins": {
+    "rag": 8,
+    "okf": 3,
+    "mixed": 4
+  },
+  "ties": 35,
+  "fail_count": 29
+}

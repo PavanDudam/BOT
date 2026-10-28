@@ -1,0 +1,262 @@
+[
+  {
+    "id": "q41",
+    "question": "Give example search queries for rushing yards",
+    "gold_answer": "For rushing yards, Athlyte Search uses Net Rushing Yards by default. Example searches: Players with rushing yards greater than 10. Players with 10+ net rushing yards. Highest net rushing yards in a game. Last time a player had 5+ net rushing yards. 3+ consecutive games with 2+ net rushing yards. Players at the 9th-most rushing yards in 1st quarter. Is Alabama's rushing yards on the rise in a season during the regular season.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Rushing yards searches default to net rushing yards. Try: Players with rushing yards greater than 10; Players with 10+ net rushing yards; Highest net rushing yards in a game; Last time a player had 5+ net rushing yards; 3+ consecutive games with 2+ net rushing yards; Players at the 9th-most rushing yards in 1st quarter; Is Alabama's rushing yards on the rise in a season during the regular season. Related stats also have examples for rushing yards gained and rushing yards lost.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 49.5,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "For net rushing yards (the default for \"rushing yards\"), examples include: Players with 10+ net rushing yards; Highest net rushing yards in a game; Last time a player had 5+ net rushing yards; 3+ consecutive games with 2+ net rushing yards. Basic stat search example: Players with rushing yards greater than 10. Rank example: Players at the 9th-most rushing yards in 1st quarter. Trend example: Is Alabama's rushing yards on the rise in a season during the regular season. Count example: In how many games did Bryce Young have greater than 80 rushing yards.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 44.9,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Athlyte treats \"rushing yards\" as net rushing yards by default. Examples: Players with rushing yards greater than 10; Players with 10+ net rushing yards; Highest net rushing yards in a game; Last time a player had 5+ net rushing yards; 3+ consecutive games with 2+ net rushing yards; Players with 10+ rushing yards gained; Players with 10+ rushing yards lost; Is Alabama's rushing yards on the rise in a season during the regular season.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 106.9,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q42",
+    "question": "What search terms can I use for sacks?",
+    "gold_answer": "Search terms for sacks depend on the stat: Total Sacks uses sacks and defense sacks; Unassisted Sacks uses solo sacks; Assisted Sacks uses assist sacks; Passing Sacks uses pass sacks.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "It depends on the stat. Total sacks: \"sacks\" or \"defense sacks.\" Unassisted sacks: \"solo sacks.\" Assisted sacks: \"assist sacks.\" Passing sacks (times sacked): \"pass sacks.\" Sack yards lost: \"pass sack yards,\" \"passing sck yards,\" \"pass sack yds,\" or \"passing sack yds.\"",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 46.8,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Total sacks: \"sacks\" or \"defense sacks.\" Unassisted sacks: \"solo sacks.\" Assisted sacks: \"assist sacks.\" Passing sacks: \"pass sacks.\"",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 51.6,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Total sacks: \"sacks\" or \"defense sacks.\" Unassisted sacks: \"solo sacks.\" Assisted sacks: \"assist sacks.\" Passing sacks: \"pass sacks.\"",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 99.3,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q43",
+    "question": "Can I request multiple time periods in one query?",
+    "gold_answer": "No. Athlyte Search queries support data for only one specified time period at a time, so you cannot request multiple periods in a single query.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "No. Each query supports only one specified time period at a time, so you cannot request multiple periods in a single search.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 52.4,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 49.5,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "No. Queries support data retrieval for only one specified time period at a time, so you cannot request multiple periods within a single query.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 101.0,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q44",
+    "question": "What appears on the result screen after a search?",
+    "gold_answer": "After a search, the Results Screen shows a table of matches with metadata such as player class, position, opposing teams, game outcomes, and conference affiliation, plus filters to refine the list. Export and reporting controls are available, and a Visualize Data panel with graphics and charts appears when the query returns at least one row. Team results use the same layout (header, filters, table, export, report), with rows aggregated to team level.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "You land on a results screen with a table of matches showing metadata such as class, position, opposing teams, game outcomes, and conference affiliation. Filters let you refine the list. Export and reporting controls are available. When at least one row is returned, you can open the Visualize Data panel for graphics and charts.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 52.7,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "The Results Screen lists matches with metadata such as player class, position, opposing teams, and game outcomes. The Player result screen shows tabular data with filters, export, and reporting controls. The Team result screen has the same structure (header, filters, table, export, report) but rows are aggregated to team level.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 43.7,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "After a search, the Results Screen shows matches with class, position, opposing teams, and game outcomes. You get tabular results with filters, export, and reporting. Player and Team views share that layout; Team rows are aggregated to team level. With at least one result row, the Visualize Data panel for graphics and charts is available.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 97.8,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q45",
+    "question": "What defensive statistics are available for MBB players?",
+    "gold_answer": "For MBB players, Athlyte Search documents Defensive Rebound Percentage as a defense statistic. It is the percentage of available defensive rebounds collected by the player. Search terms are def reb % and defrb%. Example: Players with 10+ defensive rebound percentage.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "For MBB players, the Defense category tracks Blocks, Defensive Rebounds, Steals, and Defensive Rebound Percentage. Use the MBB Player Statistics section and the Defense Statistics category in the stat search guide to browse those metrics.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 54.2,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "Documented MBB player defense stats include Defensive Rebound Percentage (search \"def reb %\" or \"defrb%\") and Defensive Rebounds (search \"def rebounds,\" \"defensive reb,\" \"def reb,\" \"def rb,\" or \"defrb\"). Example: Players with 10+ defensive rebound percentage.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 37.1,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "The docs highlight Defensive Rebound Percentage for MBB players (search \"def reb %\" or \"defrb%\"), measuring the share of available defensive rebounds the player collected. The stat search guide also lists a Defense Statistics section under MBB and WBB players for browsing defense metrics.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 106.6,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q46",
+    "question": "What is the standard data range for Men's Basketball?",
+    "gold_answer": "For Men's Basketball, the standard data range is 2009 to present. Select advanced metrics are available from 2011 to present.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Men's Basketball standard data runs from 2009 through the present. Select advanced metrics are available from 2011 through the present, including team metrics such as Points From Turnovers Percentage and Transition Offense Efficiency.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 55.7,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 39.8,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Men's Basketball standard data range is 2009 through the present. Advanced metrics for select stats are available from 2011 through the present.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 103.8,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q47",
+    "question": "How does the payment upgrade flow start?",
+    "gold_answer": "Click the Upgrade button in the top-right corner of the screen to open the plan-selection page. You can also start from the Profile page: username dropdown, then Profile, then upgrade options. The upgrade flow is a multi-step wizard: Select Sport, Choose Add-ons, then Checkout.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "Click the Upgrade button in the top-right corner to open the plan-selection page. You can also reach the flow from Profile (username dropdown, then Profile, then upgrade options). The wizard is Select Sport, then Choose Add-ons, then Checkout.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 56.2,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "From the Dashboard, click Change Plan. That opens the same plan-selection page used in the original upgrade flow; from there you pick a sport or adjust add-ons and continue through payment (see Plans and Upgrade Flow in the navigation guide).",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 62.8,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "Start with the Upgrade button in the top-right corner, or from the Dashboard use Change Plan—both open the plan-selection page. You can also enter from Profile via the username dropdown and upgrade options. The flow is Select Sport, Choose Add-ons, then Checkout.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 119.0,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q48",
+    "question": "What is the weather in New York today?",
+    "gold_answer": "I only answer from Athlyte Search docs and cannot answer that.",
+    "gold_grounded": false,
+    "predictions": {
+      "rag": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 40.1,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 72.6,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 99.0,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q49",
+    "question": "Who won the Super Bowl in 2020?",
+    "gold_answer": "I only answer from Athlyte Search docs and cannot answer that.",
+    "gold_grounded": false,
+    "predictions": {
+      "rag": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 66.8,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 45.9,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "I only answer from Athlyte Search docs and cannot answer that.",
+        "pred_grounded": false,
+        "retrieve_latency_ms": 113.8,
+        "n_chunks": 8
+      }
+    }
+  },
+  {
+    "id": "q50",
+    "question": "Does Athlyte Search support baseball?",
+    "gold_answer": "No. Baseball is not among the sports Athlyte Search currently supports. Deep statistical searching is available for Men's Football, Men's Basketball, Women's Basketball, Men's Ice Hockey, Women's Ice Hockey, Men's Soccer, Women's Soccer, Men's Volleyball, and Women's Volleyball. Support for additional sports may be added in future updates.",
+    "gold_grounded": true,
+    "predictions": {
+      "rag": {
+        "answer": "No. Baseball is not listed among supported sports. Deep statistical search is available for Men's Football, Men's Basketball, Women's Basketball, Men's Ice Hockey, Women's Ice Hockey, Men's Soccer, Women's Soccer, Men's Volleyball, and Women's Volleyball, with more sports planned for future updates.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 60.0,
+        "n_chunks": 8
+      },
+      "okf": {
+        "answer": "No. Supported sports are Men's Football, Men's Basketball, Women's Basketball, Men's Ice Hockey, Women's Ice Hockey, Men's Soccer, Women's Soccer, Men's Volleyball, and Women's Volleyball. Additional sports may be added later; baseball is not on the current list.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 43.0,
+        "n_chunks": 8
+      },
+      "mixed": {
+        "answer": "No. Baseball is not among the sports Athlyte Search supports today. Deep search covers Men's Football, Men's Basketball, Women's Basketball, Men's Ice Hockey, Women's Ice Hockey, Men's Soccer, Women's Soccer, Men's Volleyball, and Women's Volleyball, with more sports coming in future updates.",
+        "pred_grounded": true,
+        "retrieve_latency_ms": 104.8,
+        "n_chunks": 8
+      }
+    }
+  }
+]
