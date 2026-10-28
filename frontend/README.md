@@ -20,6 +20,9 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 — pick a bot in the header, then ask. Each answer is badged with the strategy used.
+Open http://localhost:5173
+
+- **Chat** — pick RAG / OKF / Mixed, then ask. Answers are badged by strategy.
+- **Benchmark** — eval dashboard (pass rates, latency, category heatmap, failure explorer) from `public/evals/dashboard.json`.
 
 Vite proxies `/api` → `http://127.0.0.1:8000`.

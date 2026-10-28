@@ -1,6 +1,9 @@
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { askBotStream, BotName, Citation } from "./api";
+import EvalDashboard from "./EvalDashboard";
 import "./App.css";
+
+type View = "chat" | "benchmark";
 
 type Message = {
   id: string;
@@ -35,7 +38,7 @@ function botLabel(bot?: BotName) {
   return BOTS.find((b) => b.id === bot)?.label ?? "RAG";
 }
 
-export default function App() {
+function ChatView() {
   const [bot, setBot] = useState<BotName>("rag");
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -85,17 +88,13 @@ export default function App() {
           onMeta: ({ bot: metaBot, intent, citations, grounded }) => {
             setMessages((prev) =>
               prev.map((m) =>
-                m.id === botId
-                  ? { ...m, bot: metaBot, intent, citations, grounded }
-                  : m,
+                m.id === botId ? { ...m, bot: metaBot, intent, citations, grounded } : m,
               ),
             );
           },
           onToken: (text) => {
             setMessages((prev) =>
-              prev.map((m) =>
-                m.id === botId ? { ...m, text: m.text + text } : m,
-              ),
+              prev.map((m) => (m.id === botId ? { ...m, text: m.text + text } : m)),
             );
           },
           onDone: ({ grounded }) => {
@@ -154,8 +153,7 @@ export default function App() {
   }
 
   return (
-    <div className="shell">
-      <div className="glow" aria-hidden />
+    <>
       <header className="hero">
         <p className="brand">Athlyte Search</p>
         <h1>Platform Help</h1>
@@ -205,7 +203,13 @@ export default function App() {
 
         <div className="suggestions">
           {SUGGESTIONS.map((s) => (
-            <button key={s} type="button" className="suggestion" onClick={() => void send(s)} disabled={loading}>
+            <button
+              key={s}
+              type="button"
+              className="suggestion"
+              onClick={() => void send(s)}
+              disabled={loading}
+            >
               {s}
             </button>
           ))}
@@ -226,6 +230,42 @@ export default function App() {
           </button>
         </form>
       </main>
+    </>
+  );
+}
+
+export default function App() {
+  const [view, setView] = useState<View>("chat");
+
+  return (
+    <div className={`shell${view === "benchmark" ? " shell-wide" : ""}`}>
+      <div className="glow" aria-hidden />
+
+      <nav className="app-nav" aria-label="Primary">
+        <span className="nav-brand">Athlyte</span>
+        <div className="nav-tabs" role="tablist">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={view === "chat"}
+            className={`nav-tab${view === "chat" ? " active" : ""}`}
+            onClick={() => setView("chat")}
+          >
+            Chat
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={view === "benchmark"}
+            className={`nav-tab${view === "benchmark" ? " active" : ""}`}
+            onClick={() => setView("benchmark")}
+          >
+            Benchmark
+          </button>
+        </div>
+      </nav>
+
+      {view === "chat" ? <ChatView /> : <EvalDashboard />}
     </div>
   );
 }
